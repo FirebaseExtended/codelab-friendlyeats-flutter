@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'src/filter_bar.dart';
 import 'src/restaurant_grid.dart';
 
-void main() => runApp(FriendlyEats());
+void main() => runApp(FriendlyEatsApp());
 
-class FriendlyEats extends StatelessWidget {
+class FriendlyEatsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
