@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'src/filter_bar.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -7,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'FriendlyEats',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -20,13 +22,13 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: FriendlyEatsHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class FriendlyEatsHomePage extends StatefulWidget {
+  FriendlyEatsHomePage({Key key}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -37,13 +39,15 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  // final String title;
+
+  // Store the selected filter and sort
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _FriendlyEatsHomePageState createState() => _FriendlyEatsHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -67,9 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        leading: Icon(Icons.restaurant),
+        title: Text('FriendlyEats'),
+        bottom: PreferredSize(
+          child: FilterBar(
+            onPressed: () {
+              print('TODO: Select filters');
+            },
+          ),
+          preferredSize: Size(100, 36),
+        ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
