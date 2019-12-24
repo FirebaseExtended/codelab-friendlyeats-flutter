@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
-import Flutter
+typedef FilterChangedCallback<T> = void Function(T newValue);
 
-@UIApplicationMain
-@objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+class Filter {
+  final String city;
+  final int price;
+  final String category;
+  final String sort;
+
+  bool get isDefault {
+    return (city == null && price == null && category == null && sort == null);
   }
+
+  Filter({this.city, this.price, this.category, this.sort});
 }
