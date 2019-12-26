@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'src/filter_bar.dart';
+import 'src/model/restaurant.dart';
 import 'src/restaurant_grid.dart';
 
 void main() => runApp(FriendlyEatsApp());
@@ -45,7 +46,8 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
           constraints: BoxConstraints(maxWidth: 1280),
           child: RestaurantGrid(
             restaurants: List<int>.generate(50, (i) => i)
-                .map((i) => 'Restaurant#$i')
+                .map((i) =>
+                    Restaurant(id: (i + 1).toString(), name: 'Restaurant#$i'))
                 .toList(),
             onRestaurantPressed: (name) =>
                 print('Pressed on restaurant: $name'),
