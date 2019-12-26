@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './model/restaurant.dart';
+import './restaurant_star_rating.dart';
 
 class RestaurantCard extends StatelessWidget {
   RestaurantCard({
@@ -19,7 +20,7 @@ class RestaurantCard extends StatelessWidget {
       onTap: () => _onPressed(restaurant.id),
       splashColor: Colors.blue.withAlpha(30),
       child: Container(
-        height: 300,
+        height: 270,
         child: Column(
           children: <Widget>[
             // TODO: Make this a Hero widget so we can transition to it
@@ -28,8 +29,7 @@ class RestaurantCard extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(
-                        'https://picsum.photos/seed/${restaurant.id}/1000'),
+                    image: NetworkImage(restaurant.imageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -46,23 +46,36 @@ class RestaurantCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             restaurant.name,
+                            overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.title,
                           ),
                         ),
-                        Text('\$\$\$'),
+                        Text(
+                          List.filled(restaurant.price, "\$").join(),
+                          style: Theme.of(context).textTheme.caption,
+                        ),
                       ],
                     ),
                     Expanded(
-                        child: Container(
-                      color: Colors.blue,
-                      alignment: Alignment.centerLeft,
-                      child: Text('*****'),
-                    )),
+                      flex: 2,
+                      child: Container(
+                        width: 120,
+                        alignment: Alignment.bottomLeft,
+                        child: StarRating(
+                          rating: restaurant.rating,
+                        ),
+                      ),
+                    ),
                     Expanded(
-                        child: Container(
-                            color: Colors.red,
-                            child: Text('Thai ● Seattle'),
-                            alignment: Alignment.bottomLeft)),
+                      flex: 1,
+                      child: Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          '${restaurant.cuisine} ● ${restaurant.location}',
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -46,8 +46,16 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
           constraints: BoxConstraints(maxWidth: 1280),
           child: RestaurantGrid(
             restaurants: List<int>.generate(50, (i) => i)
-                .map((i) =>
-                    Restaurant(id: (i + 1).toString(), name: 'Restaurant#$i'))
+                .map(
+                  (i) => Restaurant(
+                      id: (i + 1).toString(),
+                      name: 'Restaurant#$i',
+                      cuisine: "Thai",
+                      location: "Seattle",
+                      rating: 3.6,
+                      price: 2,
+                      imageUrl: 'https://picsum.photos/seed/${(i + 1)}/1000'),
+                )
                 .toList(),
             onRestaurantPressed: (name) =>
                 print('Pressed on restaurant: $name'),
