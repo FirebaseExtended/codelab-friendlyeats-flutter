@@ -4,6 +4,9 @@ import 'src/filter_bar.dart';
 import 'src/model/restaurant.dart';
 import 'src/restaurant_grid.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 void main() => runApp(FriendlyEatsApp());
 
 class FriendlyEatsApp extends StatelessWidget {
@@ -19,13 +22,40 @@ class FriendlyEatsApp extends StatelessWidget {
 class FriendlyEatsHomePage extends StatefulWidget {
   FriendlyEatsHomePage({Key key}) : super(key: key);
 
-  // Store the selected filter and sort configuration for firestore
-
   @override
   _FriendlyEatsHomePageState createState() => _FriendlyEatsHomePageState();
 }
 
 class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
+  _FriendlyEatsHomePageState() {
+    FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
+      _loadAllRestaurants();
+    });
+  }
+
+  bool _isLoading = true;
+  List<Restaurant> _restaurants = <Restaurant>[];
+
+  Stream<QuerySnapshot> _currentQuery;
+
+  void _loadAllRestaurants() async {
+    _currentQuery = Firestore.instance
+        .collection('restaurants')
+        .orderBy('avgRating', descending: true)
+        .limit(50)
+        .snapshots(includeMetadataChanges: true);
+    _currentQuery.listen(_updateRestaurants);
+  }
+
+  void _updateRestaurants(QuerySnapshot snapshot) {
+    setState(() {
+      _isLoading = false;
+      _restaurants = snapshot.documents.map((DocumentSnapshot doc) {
+        return Restaurant.fromSnapshot(doc);
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,22 +74,13 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
       body: Center(
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 1280),
-          child: RestaurantGrid(
-            restaurants: List<int>.generate(50, (i) => i)
-                .map(
-                  (i) => Restaurant(
-                      id: (i + 1).toString(),
-                      name: 'Restaurant#$i',
-                      cuisine: "Thai",
-                      location: "Seattle",
-                      rating: 3.6,
-                      price: 2,
-                      imageUrl: 'https://picsum.photos/seed/${(i + 1)}/1000'),
-                )
-                .toList(),
-            onRestaurantPressed: (name) =>
-                print('Pressed on restaurant: $name'),
-          ),
+          child: _isLoading
+              ? CircularProgressIndicator()
+              : RestaurantGrid(
+                  restaurants: _restaurants,
+                  onRestaurantPressed: (name) =>
+                      print('Pressed on restaurant: $name'),
+                ),
         ),
       ),
     );

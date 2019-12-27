@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Restaurant {
   final String id;
   final String name;
@@ -6,13 +8,16 @@ class Restaurant {
   final double rating;
   final int price;
   final String imageUrl;
+  final DocumentReference reference;
 
-  Restaurant(
-      {this.id,
-      this.name,
-      this.cuisine,
-      this.location,
-      this.rating,
-      this.price,
-      this.imageUrl});
+  Restaurant.fromSnapshot(DocumentSnapshot snapshot)
+      : assert(snapshot != null),
+        id = snapshot.documentID,
+        name = snapshot['name'],
+        cuisine = snapshot['category'],
+        location = snapshot['city'],
+        rating = snapshot['avgRating'],
+        price = snapshot['price'],
+        imageUrl = snapshot['photo'],
+        reference = snapshot.reference;
 }

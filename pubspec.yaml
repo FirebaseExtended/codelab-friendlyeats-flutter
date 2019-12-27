@@ -17,6 +17,10 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  firebase_auth: ^0.15.3
+  cloud_firestore:
+    path:
+      ../flutterfire/packages/cloud_firestore/cloud_firestore
   responsive_grid: ^1.1.1
   rating_bar: ^0.2.0
   flutter:
