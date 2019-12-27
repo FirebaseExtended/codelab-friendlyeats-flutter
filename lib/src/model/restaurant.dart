@@ -16,7 +16,7 @@ class Restaurant {
         name = snapshot['name'],
         cuisine = snapshot['category'],
         location = snapshot['city'],
-        rating = snapshot['avgRating'],
+        rating = snapshot['avgRating'].toDouble(),
         price = snapshot['price'],
         imageUrl = snapshot['photo'],
         reference = snapshot.reference;
