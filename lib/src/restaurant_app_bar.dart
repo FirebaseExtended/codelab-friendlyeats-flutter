@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './model/restaurant.dart';
 import './restaurant_star_rating.dart';
 
-const double _kAppBarHeight = 140;
+const double _kAppBarHeight = 160;
 
 class RestaurantAppBar extends StatelessWidget {
   RestaurantAppBar({
@@ -26,9 +26,7 @@ class RestaurantAppBar extends StatelessWidget {
       expandedHeight: _kAppBarHeight,
       forceElevated: true,
       flexibleSpace: FlexibleSpaceBar(
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        title: Wrap(
           children: <Widget>[
             Text(
               restaurant.name,
@@ -39,7 +37,6 @@ class RestaurantAppBar extends StatelessWidget {
               children: <Widget>[
                 Container(
                   width: 80,
-                  padding: EdgeInsets.only(bottom: 2),
                   alignment: Alignment.bottomLeft,
                   child: StarRating(
                     rating: restaurant.rating,
@@ -56,10 +53,13 @@ class RestaurantAppBar extends StatelessWidget {
                 ),
               ],
             ),
-            Text(
-              '${restaurant.cuisine} ● ${restaurant.location}',
-              style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.caption.fontSize),
+            Padding(
+              padding: EdgeInsets.only(top: 2),
+              child: Text(
+                '${restaurant.cuisine} ● ${restaurant.location}',
+                style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.caption.fontSize),
+              ),
             ),
           ],
         ),
