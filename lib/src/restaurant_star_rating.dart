@@ -4,7 +4,7 @@ import 'package:rating_bar/rating_bar.dart';
 class StarRating extends StatelessWidget {
   StarRating({
     this.rating,
-    small = false,
+    bool small = false,
   }) : this.small = small;
 
   final double rating;
