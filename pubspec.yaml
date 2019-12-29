@@ -22,7 +22,7 @@ dependencies:
     path:
       ../flutterfire/packages/cloud_firestore/cloud_firestore
   responsive_grid: ^1.1.1
-  rating_bar: ^0.2.0
+  smooth_star_rating: ^1.0.4+2
   flutter:
     sdk: flutter
 

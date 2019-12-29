@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:rating_bar/rating_bar.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class StarRating extends StatelessWidget {
   StarRating({
     this.rating,
-    bool small = false,
-  }) : this.small = small;
+    Color color = Colors.amber,
+    double size = 24,
+  }) : this.color = color, this.size = size;
 
   final double rating;
-  final bool small;
+  final double size;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    Color widgetColor = small ? Colors.white : Colors.amber;
-    double size = small ? 16 : 24;
-
-    return RatingBar.readOnly(
-      maxRating: 5,
-      initialRating: rating,
-      isHalfAllowed: true,
-      halfFilledIcon: Icons.star_half,
-      filledIcon: Icons.star,
-      emptyIcon: Icons.star_border,
-      filledColor: widgetColor,
-      emptyColor: widgetColor,
-      halfFilledColor: widgetColor,
+    return SmoothStarRating(
+      starCount: 5,
+      allowHalfRating: true,
+      rating: rating,
+      color: color,
+      borderColor: color,
       size: size,
     );
   }
