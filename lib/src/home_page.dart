@@ -63,7 +63,7 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
         ),
       ),
       body: Center(
-        child: ConstrainedBox(
+        child: Container(
           constraints: BoxConstraints(maxWidth: 1280),
           child: _isLoading
               ? CircularProgressIndicator()
