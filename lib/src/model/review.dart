@@ -17,4 +17,10 @@ class Review {
         userName = snapshot['userName'],
         timestamp = snapshot['timestamp'],
         reference = snapshot.reference;
+
+  Review.fromUserInput({this.rating, this.text})
+      : id = null,
+        userName = null,
+        timestamp = DateTime.now(),
+        reference = null;
 }

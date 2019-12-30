@@ -6,6 +6,7 @@ class Restaurant {
   final String cuisine;
   final String location;
   final double rating;
+  final int numRatings;
   final int price;
   final String imageUrl;
   final DocumentReference reference;
@@ -17,6 +18,7 @@ class Restaurant {
         cuisine = snapshot['category'],
         location = snapshot['city'],
         rating = snapshot['avgRating'].toDouble(),
+        numRatings = snapshot['numRatings'],
         price = snapshot['price'],
         imageUrl = snapshot['photo'],
         reference = snapshot.reference;

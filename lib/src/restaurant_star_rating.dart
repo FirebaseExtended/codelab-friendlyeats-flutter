@@ -6,7 +6,8 @@ class StarRating extends StatelessWidget {
     this.rating,
     Color color = Colors.amber,
     double size = 24,
-  }) : this.color = color, this.size = size;
+  })  : this.color = color,
+        this.size = size;
 
   final double rating;
   final double size;
