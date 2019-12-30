@@ -94,7 +94,6 @@ class _FriendlyEatsRestaurantPageState
         });
       });
     }
-    print(newReview);
   }
 
   @override
