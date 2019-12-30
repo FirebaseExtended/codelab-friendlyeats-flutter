@@ -5,7 +5,7 @@ class Review {
   final double rating;
   final String text;
   final String userName;
-  final DateTime timestamp;
+  // final DateTime timestamp; // This is DateTime for web, but Timestamp for mobile!!!
 
   final DocumentReference reference;
 
@@ -15,12 +15,10 @@ class Review {
         rating = snapshot['rating'].toDouble(),
         text = snapshot['text'],
         userName = snapshot['userName'],
-        timestamp = snapshot['timestamp'],
         reference = snapshot.reference;
 
   Review.fromUserInput({this.rating, this.text})
       : id = null,
         userName = null,
-        timestamp = DateTime.now(),
         reference = null;
 }

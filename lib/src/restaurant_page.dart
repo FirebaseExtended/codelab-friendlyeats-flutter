@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import './model/restaurant.dart';
@@ -87,8 +88,8 @@ class _FriendlyEatsRestaurantPageState
           return transaction.set(review, {
             'rating': newReview.rating,
             'text': newReview.text,
-            'userName': 'Anonymous (Web)',
-            'timestamp': newReview.timestamp,
+            'userName': 'Anonymous (${kIsWeb ? "Web" : "Mobile"})',
+            'timestamp': FieldValue.serverTimestamp(),
             'userId': userId,
           });
         });
@@ -99,7 +100,7 @@ class _FriendlyEatsRestaurantPageState
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? LinearProgressIndicator()
+        ? Center(child: CircularProgressIndicator())
         : Scaffold(
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: FloatingActionButton(

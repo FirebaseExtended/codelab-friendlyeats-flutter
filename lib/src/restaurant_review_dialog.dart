@@ -36,9 +36,11 @@ class _RestaurantReviewDialogState extends State<RestaurantReviewDialog> {
                 borderColor: Colors.grey,
                 size: 32,
                 onRatingChanged: (double value) {
-                  setState(() {
-                    rating = value;
-                  });
+                  if (this.mounted) {
+                    setState(() {
+                      rating = value;
+                    });
+                  }
                 },
               ),
             ),
@@ -49,9 +51,11 @@ class _RestaurantReviewDialogState extends State<RestaurantReviewDialog> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 onChanged: (String value) {
-                  setState(() {
-                    review = value;
-                  });
+                  if (this.mounted) {
+                    setState(() {
+                      review = value;
+                    });
+                  }
                 },
               ),
             ),
