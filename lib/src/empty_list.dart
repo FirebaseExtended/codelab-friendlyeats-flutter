@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 class EmptyListView extends StatelessWidget {
@@ -12,7 +10,11 @@ class EmptyListView extends StatelessWidget {
   final Function onPressed;
   @override
   Widget build(BuildContext context) {
-    double imageSize = math.min(600, MediaQuery.of(context).size.width);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double imageSize = 600;
+    if (screenWidth < 640) {
+      imageSize = screenWidth * .66;
+    }
     return Center(child: Column(
       mainAxisSize: MainAxisSize.min,
         children: <Widget>[
