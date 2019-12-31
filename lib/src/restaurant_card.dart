@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import './model/restaurant.dart';
@@ -20,64 +21,57 @@ class RestaurantCard extends StatelessWidget {
       onTap: () => _onPressed(restaurant.id),
       splashColor: Colors.blue.withAlpha(30),
       child: Container(
-        height: 270,
+        height: 250,
         child: Column(
           children: <Widget>[
-            // TODO: Make this a Hero widget so we can transition to it
-            Container(
-                height: 180,
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(restaurant.imageUrl),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: null),
+            // TODO: Make this a Hero widget so we can transition to it?
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            restaurant.name,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.title,
-                          ),
-                        ),
-                        Text(
-                          List.filled(restaurant.price, "\$").join(),
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                      ],
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(restaurant.imageUrl),
+                      fit: BoxFit.cover,
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        width: 120,
-                        alignment: Alignment.bottomLeft,
-                        child: StarRating(
-                          rating: restaurant.rating,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        alignment: Alignment.bottomLeft,
+                  ),
+                  child: null),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
                         child: Text(
-                          '${restaurant.cuisine} ● ${restaurant.location}',
-                          style: Theme.of(context).textTheme.caption,
+                          restaurant.name,
+                          style: Theme.of(context).textTheme.title,
                         ),
                       ),
+                      Text(
+                        List.filled(restaurant.price, "\$").join(),
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, (kIsWeb ? 0 : 2), 0, 4),
+                    alignment: Alignment.bottomLeft,
+                    child: StarRating(
+                      rating: restaurant.rating,
                     ),
-                  ],
-                ),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      '${restaurant.cuisine} ● ${restaurant.location}',
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
