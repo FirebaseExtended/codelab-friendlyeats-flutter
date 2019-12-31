@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import './empty_list.dart';
 import './model/restaurant.dart';
 import './model/review.dart';
 import './restaurant_app_bar.dart';
@@ -56,21 +59,18 @@ class _FriendlyEatsRestaurantPageState
   bool _isLoading = true;
   Restaurant _restaurant;
   List<Review> _reviews = <Review>[];
+  bool get _hasReviews => _reviews.isNotEmpty;
 
-  void _onCreateReviewPressed(BuildContext context) async {
-    Review newReview = await showDialog<Review>(
-        context: context, builder: (_) => RestaurantReviewDialog());
-    if (newReview != null) {
-      // Save the review
+  Future<void> _addReview(String restaurantId, Review newReview) async {
       CollectionReference collection =
           Firestore.instance.collection('restaurants');
-      DocumentReference restaurant = collection.document(_restaurant.id);
+      DocumentReference restaurant = collection.document(restaurantId);
       DocumentReference review = restaurant.collection('ratings').document();
       String userId = await FirebaseAuth.instance
           .currentUser()
           .then((FirebaseUser user) => user.uid);
 
-      Firestore.instance.runTransaction((Transaction transaction) {
+      return Firestore.instance.runTransaction((Transaction transaction) {
         return transaction
             .get(restaurant)
             .then((DocumentSnapshot freshRestaurantSnapshot) {
@@ -94,6 +94,22 @@ class _FriendlyEatsRestaurantPageState
           });
         });
       });
+  }
+
+  void _onCreateReviewPressed(BuildContext context) async {
+    Review newReview = await showDialog<Review>(
+        context: context, builder: (_) => RestaurantReviewDialog());
+    if (newReview != null) {
+      // Save the review
+      return _addReview(_restaurant.id, newReview);
+    }
+  }
+
+  void _onAddRandomReviewsPressed() async {
+    // Await adding a random number of random reviews
+    int numReviews = Random().nextInt(5) + 5;
+    for (int i = 0; i < numReviews; i++) {
+      await _addReview(_restaurant.id, Review.random());
     }
   }
 
@@ -115,11 +131,14 @@ class _FriendlyEatsRestaurantPageState
                   restaurant: _restaurant,
                   onClosePressed: () => Navigator.pop(context),
                 ),
-                SliverList(
+                _reviews.isNotEmpty ? SliverList(
                   delegate: SliverChildListDelegate(_reviews
                       .map((Review review) => RestaurantReview(review: review))
                       .toList()),
-                ),
+                ) : SliverFillRemaining(hasScrollBody: false, child: EmptyListView(
+                  child: Text('${_restaurant.name} has no reviews.'),
+                  onPressed: _onAddRandomReviewsPressed,
+                )),
               ],
             ),
           );

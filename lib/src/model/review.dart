@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import './random.dart';
 
 class Review {
   final String id;
@@ -21,4 +25,10 @@ class Review {
       : id = null,
         userName = null,
         reference = null;
+
+  factory Review.random() {
+    int rating = Random().nextInt(4) + 1;
+    String review = getMockReview(rating);
+    return Review.fromUserInput(rating: rating.toDouble(), text: review);
+  }
 }
