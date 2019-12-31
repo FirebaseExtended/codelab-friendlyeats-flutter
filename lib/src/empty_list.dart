@@ -15,17 +15,21 @@ class EmptyListView extends StatelessWidget {
     if (screenWidth < 640) {
       imageSize = screenWidth * .66;
     }
-    return Center(child: Column(
-      mainAxisSize: MainAxisSize.min,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(width: imageSize, height: imageSize, child: Image.asset('assets/friendlyeater.png',),),
-          child,
-         RaisedButton(
-              child: Text('ADD SOME'),
-              onPressed: onPressed
+          Container(
+            width: imageSize,
+            height: imageSize,
+            child: Image.asset(
+              'assets/friendlyeater.png',
             ),
-
+          ),
+          child,
+          RaisedButton(child: Text('ADD SOME'), onPressed: onPressed),
         ],
-    ),);
+      ),
+    );
   }
 }

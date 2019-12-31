@@ -62,38 +62,38 @@ class _FriendlyEatsRestaurantPageState
   bool get _hasReviews => _reviews.isNotEmpty;
 
   Future<void> _addReview(String restaurantId, Review newReview) async {
-      CollectionReference collection =
-          Firestore.instance.collection('restaurants');
-      DocumentReference restaurant = collection.document(restaurantId);
-      DocumentReference review = restaurant.collection('ratings').document();
-      String userId = await FirebaseAuth.instance
-          .currentUser()
-          .then((FirebaseUser user) => user.uid);
+    CollectionReference collection =
+        Firestore.instance.collection('restaurants');
+    DocumentReference restaurant = collection.document(restaurantId);
+    DocumentReference review = restaurant.collection('ratings').document();
+    String userId = await FirebaseAuth.instance
+        .currentUser()
+        .then((FirebaseUser user) => user.uid);
 
-      return Firestore.instance.runTransaction((Transaction transaction) {
-        return transaction
-            .get(restaurant)
-            .then((DocumentSnapshot freshRestaurantSnapshot) {
-          Restaurant freshRestaurant =
-              Restaurant.fromSnapshot(freshRestaurantSnapshot);
-          double newAverage =
-              ((freshRestaurant.numRatings * freshRestaurant.rating) +
-                      newReview.rating) /
-                  (freshRestaurant.numRatings + 1);
-          transaction.update(restaurant, {
-            'numRatings': freshRestaurant.numRatings + 1,
-            'avgRating': newAverage,
-          });
+    return Firestore.instance.runTransaction((Transaction transaction) {
+      return transaction
+          .get(restaurant)
+          .then((DocumentSnapshot freshRestaurantSnapshot) {
+        Restaurant freshRestaurant =
+            Restaurant.fromSnapshot(freshRestaurantSnapshot);
+        double newAverage =
+            ((freshRestaurant.numRatings * freshRestaurant.rating) +
+                    newReview.rating) /
+                (freshRestaurant.numRatings + 1);
+        transaction.update(restaurant, {
+          'numRatings': freshRestaurant.numRatings + 1,
+          'avgRating': newAverage,
+        });
 
-          return transaction.set(review, {
-            'rating': newReview.rating,
-            'text': newReview.text,
-            'userName': 'Anonymous (${kIsWeb ? "Web" : "Mobile"})',
-            'timestamp': FieldValue.serverTimestamp(),
-            'userId': userId,
-          });
+        return transaction.set(review, {
+          'rating': newReview.rating,
+          'text': newReview.text,
+          'userName': 'Anonymous (${kIsWeb ? "Web" : "Mobile"})',
+          'timestamp': FieldValue.serverTimestamp(),
+          'userId': userId,
         });
       });
+    });
   }
 
   void _onCreateReviewPressed(BuildContext context) async {
@@ -131,14 +131,19 @@ class _FriendlyEatsRestaurantPageState
                   restaurant: _restaurant,
                   onClosePressed: () => Navigator.pop(context),
                 ),
-                _reviews.isNotEmpty ? SliverList(
-                  delegate: SliverChildListDelegate(_reviews
-                      .map((Review review) => RestaurantReview(review: review))
-                      .toList()),
-                ) : SliverFillRemaining(hasScrollBody: false, child: EmptyListView(
-                  child: Text('${_restaurant.name} has no reviews.'),
-                  onPressed: _onAddRandomReviewsPressed,
-                )),
+                _reviews.isNotEmpty
+                    ? SliverList(
+                        delegate: SliverChildListDelegate(_reviews
+                            .map((Review review) =>
+                                RestaurantReview(review: review))
+                            .toList()),
+                      )
+                    : SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: EmptyListView(
+                          child: Text('${_restaurant.name} has no reviews.'),
+                          onPressed: _onAddRandomReviewsPressed,
+                        )),
               ],
             ),
           );
