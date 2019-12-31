@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import './random.dart';
 
 class Restaurant {
   final String id;
@@ -11,6 +15,13 @@ class Restaurant {
   final String imageUrl;
   final DocumentReference reference;
 
+  Restaurant._(
+      {this.name, this.cuisine, this.location, this.price, this.imageUrl})
+      : id = null,
+        numRatings = 0,
+        rating = 0,
+        reference = null;
+
   Restaurant.fromSnapshot(DocumentSnapshot snapshot)
       : assert(snapshot != null),
         id = snapshot.documentID,
@@ -22,4 +33,14 @@ class Restaurant {
         price = snapshot['price'],
         imageUrl = snapshot['photo'],
         reference = snapshot.reference;
+
+  factory Restaurant.random() {
+    return Restaurant._(
+      cuisine: getMockCuisine(),
+      location: getMockCity(),
+      name: getMockName(),
+      price: Random().nextInt(3) + 1,
+      imageUrl: getMockImageUrl(),
+    );
+  }
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import './filter_bar.dart';
@@ -7,6 +9,8 @@ import './restaurant_page.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'empty_list.dart';
 
 class FriendlyEatsHomePage extends StatefulWidget {
   static const route = '/';
@@ -47,6 +51,28 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
     });
   }
 
+  Future<void> _addRestaurant(Restaurant restaurant) async {
+    CollectionReference restaurants =
+        Firestore.instance.collection('restaurants');
+    return restaurants.add({
+      'avgRating': 0,
+      'category': restaurant.cuisine,
+      'city': restaurant.location,
+      'name': restaurant.name,
+      'numRatings': 0,
+      'photo': restaurant.imageUrl,
+      'price': restaurant.price,
+    });
+  }
+
+  void _onAddRandomRestaurantsPressed() async {
+    // Await adding a random number of random reviews
+    int numReviews = Random().nextInt(10) + 20;
+    for (int i = 0; i < numReviews; i++) {
+      await _addRestaurant(Restaurant.random());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,14 +93,20 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
           constraints: BoxConstraints(maxWidth: 1280),
           child: _isLoading
               ? CircularProgressIndicator()
-              : RestaurantGrid(
-                  restaurants: _restaurants,
-                  onRestaurantPressed: (id) {
-                    // TODO: How can I get deep links on web?
-                    Navigator.pushNamed(
-                        context, FriendlyEatsRestaurantPage.route,
-                        arguments: FriendlyEatsRestaurantPageArguments(id: id));
-                  }),
+              : _restaurants.isNotEmpty
+                  ? RestaurantGrid(
+                      restaurants: _restaurants,
+                      onRestaurantPressed: (id) {
+                        // TODO: How can I get deep links on web?
+                        Navigator.pushNamed(
+                            context, FriendlyEatsRestaurantPage.route,
+                            arguments:
+                                FriendlyEatsRestaurantPageArguments(id: id));
+                      })
+                  : EmptyListView(
+                      child: Text('FriendlyEats has no restaurants yet!'),
+                      onPressed: _onAddRandomRestaurantsPressed,
+                    ),
         ),
       ),
     );
