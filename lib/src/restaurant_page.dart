@@ -60,7 +60,6 @@ class _FriendlyEatsRestaurantPageState
   bool _isLoading = true;
   Restaurant _restaurant;
   List<Review> _reviews = <Review>[];
-  bool get _hasReviews => _reviews.isNotEmpty;
 
   Future<void> _addReview(String restaurantId, Review newReview) async {
     CollectionReference collection =
