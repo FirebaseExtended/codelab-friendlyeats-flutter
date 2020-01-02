@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import './random.dart';
+import './data.dart';
 
 class Review {
   final String id;
