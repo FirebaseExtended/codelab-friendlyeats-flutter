@@ -16,7 +16,6 @@ class RestaurantReview extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(maxWidth: 600),
         padding: EdgeInsets.fromLTRB(0, 16, 0, 16),
-        margin: EdgeInsets.fromLTRB(16, 0, 16, 0),
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(

@@ -231,6 +231,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliver_fab:
+    dependency: "direct main"
+    description:
+      name: sliver_fab
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   smooth_star_rating:
     dependency: "direct main"
     description:

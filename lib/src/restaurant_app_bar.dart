@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import './model/restaurant.dart';
 import './restaurant_star_rating.dart';
 
-const double _kAppBarHeight = 160;
-
 class RestaurantAppBar extends StatelessWidget {
+  static final double kAppBarHeight = 160;
+
   RestaurantAppBar({
     this.restaurant,
     Function onClosePressed,
@@ -23,7 +23,7 @@ class RestaurantAppBar extends StatelessWidget {
         icon: Icon(Icons.close),
         iconSize: 32,
       ),
-      expandedHeight: _kAppBarHeight,
+      expandedHeight: kAppBarHeight,
       forceElevated: true,
       flexibleSpace: FlexibleSpaceBar(
         title: Wrap(

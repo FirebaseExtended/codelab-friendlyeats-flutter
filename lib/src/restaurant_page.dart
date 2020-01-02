@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sliver_fab/sliver_fab.dart';
 
 import './empty_list.dart';
 import './model/restaurant.dart';
@@ -118,33 +119,40 @@ class _FriendlyEatsRestaurantPageState
     return _isLoading
         ? Center(child: CircularProgressIndicator())
         : Scaffold(
-            floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-            floatingActionButton: FloatingActionButton(
-              tooltip: 'Add a review',
-              backgroundColor: Colors.amber,
-              child: Icon(Icons.add),
-              onPressed: () => _onCreateReviewPressed(context),
-            ),
-            body: CustomScrollView(
-              slivers: <Widget>[
-                RestaurantAppBar(
-                  restaurant: _restaurant,
-                  onClosePressed: () => Navigator.pop(context),
+            body: Builder(
+              builder: (context) => SliverFab(
+                floatingWidget: FloatingActionButton(
+                  tooltip: 'Add a review',
+                  backgroundColor: Colors.amber,
+                  child: Icon(Icons.add),
+                  onPressed: () => _onCreateReviewPressed(context),
                 ),
-                _reviews.isNotEmpty
-                    ? SliverList(
-                        delegate: SliverChildListDelegate(_reviews
-                            .map((Review review) =>
-                                RestaurantReview(review: review))
-                            .toList()),
-                      )
-                    : SliverFillRemaining(
-                        hasScrollBody: false,
-                        child: EmptyListView(
-                          child: Text('${_restaurant.name} has no reviews.'),
-                          onPressed: _onAddRandomReviewsPressed,
-                        )),
-              ],
+                floatingPosition: FloatingPosition(right: 16),
+                expandedHeight: RestaurantAppBar.kAppBarHeight,
+                slivers: <Widget>[
+                  RestaurantAppBar(
+                    restaurant: _restaurant,
+                    onClosePressed: () => Navigator.pop(context),
+                  ),
+                  _reviews.isNotEmpty
+                      ? SliverPadding(
+                          padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
+                          sliver: SliverList(
+                            delegate: SliverChildListDelegate(_reviews
+                                .map((Review review) =>
+                                    RestaurantReview(review: review))
+                                .toList()),
+                          ),
+                        )
+                      : SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: EmptyListView(
+                            child: Text('${_restaurant.name} has no reviews.'),
+                            onPressed: _onAddRandomReviewsPressed,
+                          ),
+                        ),
+                ],
+              ),
             ),
           );
   }
