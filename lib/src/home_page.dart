@@ -1,16 +1,16 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import './empty_list.dart';
 import './filter_bar.dart';
+import './filter_dialog.dart';
+import './model/filter.dart';
 import './model/restaurant.dart';
 import './restaurant_grid.dart';
 import './restaurant_page.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'empty_list.dart';
 
 class FriendlyEatsHomePage extends StatefulWidget {
   static const route = '/';
@@ -24,22 +24,40 @@ class FriendlyEatsHomePage extends StatefulWidget {
 class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   _FriendlyEatsHomePageState() {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
-      _loadAllRestaurants();
+      _query = _loadAllRestaurants();
+      _query.listen(_updateRestaurants);
     });
   }
 
+  Stream<QuerySnapshot> _query;
+
   bool _isLoading = true;
   List<Restaurant> _restaurants = <Restaurant>[];
+  Filter _filter;
 
-  Stream<QuerySnapshot> _currentQuery;
-
-  void _loadAllRestaurants() async {
-    _currentQuery = Firestore.instance
+  Stream<QuerySnapshot> _loadAllRestaurants() {
+    return Firestore.instance
         .collection('restaurants')
         .orderBy('avgRating', descending: true)
         .limit(50)
         .snapshots(includeMetadataChanges: true);
-    _currentQuery.listen(_updateRestaurants);
+  }
+
+  Stream<QuerySnapshot> _loadFilteredRestaurants(Filter filter) {
+    Query collection = Firestore.instance.collection('restaurants');
+    if (filter.cuisine != null) {
+      collection = collection.where('category', isEqualTo: filter.cuisine);
+    }
+    if (filter.location != null) {
+      collection = collection.where('city', isEqualTo: filter.location);
+    }
+    if (filter.price != null) {
+      collection = collection.where('price', isEqualTo: filter.price);
+    }
+    return collection
+        .orderBy(filter.sort ?? 'avgRating', descending: true)
+        .limit(50)
+        .snapshots();
   }
 
   void _updateRestaurants(QuerySnapshot snapshot) {
@@ -73,6 +91,25 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
     }
   }
 
+  void _onFilterBarPressed() async {
+    Filter filter = await showDialog<Filter>(
+      context: context,
+      builder: (_) => FilterDialog(filter: _filter),
+    );
+    if (filter != null) {
+      setState(() {
+        _isLoading = true;
+        _filter = filter;
+        if (filter.isDefault) {
+          _query = _loadAllRestaurants();
+        } else {
+          _query = _loadFilteredRestaurants(filter);
+        }
+        _query.listen(_updateRestaurants);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,11 +117,13 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
         leading: Icon(Icons.restaurant),
         title: Text('FriendlyEats'),
         bottom: PreferredSize(
-          preferredSize: Size(100, 36),
-          child: FilterBar(
-            onPressed: () {
-              print('TODO: Select filters');
-            },
+          preferredSize: Size(320, 48),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(6, 0, 6, 4),
+            child: FilterBar(
+              filter: _filter,
+              onPressed: _onFilterBarPressed,
+            ),
           ),
         ),
       ),

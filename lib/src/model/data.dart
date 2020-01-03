@@ -1,6 +1,6 @@
 import 'dart:math';
 
-final List<String> _mockCities = <String>[
+final List<String> locations = <String>[
   'Albuquerque',
   'Arlington',
   'Atlanta',
@@ -51,7 +51,7 @@ final List<String> _mockCities = <String>[
   'Washington',
 ];
 
-final List<String> _mockCuisines = <String>[
+final List<String> cuisines = <String>[
   'Brunch',
   'Burgers',
   'Coffee',
@@ -137,11 +137,11 @@ String getMockName() {
 }
 
 String getMockCuisine() {
-  return _mockCuisines[random.nextInt(_mockCuisines.length)];
+  return cuisines[random.nextInt(cuisines.length)];
 }
 
 String getMockCity() {
-  return _mockCities[random.nextInt(_mockCities.length)];
+  return locations[random.nextInt(locations.length)];
 }
 
 String getMockImageUrl() {
