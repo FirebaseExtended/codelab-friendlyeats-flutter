@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,16 +32,16 @@ class _FriendlyEatsRestaurantPageState
     extends State<FriendlyEatsRestaurantPage> {
   _FriendlyEatsRestaurantPageState({@required String restaurantId}) {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
-      // Load restaurant data (TODO: Move to snapshot() instead of get() to get live updates)
-      Firestore.instance
+      _currentRestaurantSubscription = Firestore.instance
           .collection('restaurants')
           .document(restaurantId)
           .snapshots()
           .listen((DocumentSnapshot snap) {
+        _currentReviewSubscription?.cancel();
         setState(() {
           _restaurant = Restaurant.fromSnapshot(snap);
           // Initialize the reviews snapshot...
-          _restaurant.reference
+          _currentReviewSubscription = _restaurant.reference
               .collection('ratings')
               .orderBy('timestamp', descending: true)
               .snapshots()
@@ -57,7 +58,17 @@ class _FriendlyEatsRestaurantPageState
     });
   }
 
+  @override
+  void dispose() {
+    _currentRestaurantSubscription?.cancel();
+    _currentReviewSubscription?.cancel();
+    super.dispose();
+  }
+
   bool _isLoading = true;
+  StreamSubscription<DocumentSnapshot> _currentRestaurantSubscription;
+  StreamSubscription<QuerySnapshot> _currentReviewSubscription;
+
   Restaurant _restaurant;
   List<Review> _reviews = <Review>[];
 

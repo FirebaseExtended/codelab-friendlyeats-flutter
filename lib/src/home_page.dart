@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,13 +25,17 @@ class FriendlyEatsHomePage extends StatefulWidget {
 class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   _FriendlyEatsHomePageState() {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
-      _query = _loadAllRestaurants();
-      _query.listen(_updateRestaurants);
+      _currentSubscription = _loadAllRestaurants().listen(_updateRestaurants);
     });
   }
 
-  Stream<QuerySnapshot> _query;
+  @override
+  void dispose() {
+    _currentSubscription?.cancel();
+    super.dispose();
+  }
 
+  StreamSubscription<QuerySnapshot> _currentSubscription;
   bool _isLoading = true;
   List<Restaurant> _restaurants = <Restaurant>[];
   Filter _filter;
@@ -40,7 +45,7 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
         .collection('restaurants')
         .orderBy('avgRating', descending: true)
         .limit(50)
-        .snapshots(includeMetadataChanges: true);
+        .snapshots();
   }
 
   Stream<QuerySnapshot> _loadFilteredRestaurants(Filter filter) {
@@ -97,15 +102,17 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
       builder: (_) => FilterDialog(filter: _filter),
     );
     if (filter != null) {
+      _currentSubscription?.cancel();
       setState(() {
         _isLoading = true;
         _filter = filter;
         if (filter.isDefault) {
-          _query = _loadAllRestaurants();
+          _currentSubscription =
+              _loadAllRestaurants().listen(_updateRestaurants);
         } else {
-          _query = _loadFilteredRestaurants(filter);
+          _currentSubscription =
+              _loadFilteredRestaurants(filter).listen(_updateRestaurants);
         }
-        _query.listen(_updateRestaurants);
       });
     }
   }
