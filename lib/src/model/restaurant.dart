@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import './data.dart';
+import './values.dart';
 
 class Restaurant {
   final String id;

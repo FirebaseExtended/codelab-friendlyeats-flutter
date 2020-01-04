@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import './data.dart';
+import './values.dart';
 
 class Review {
   final String id;
   final double rating;
   final String text;
   final String userName;
-  // final DateTime timestamp; // This is DateTime for web, but Timestamp for mobile!!!
+  final Timestamp timestamp;
 
   final DocumentReference reference;
 
@@ -19,11 +19,13 @@ class Review {
         rating = snapshot['rating'].toDouble(),
         text = snapshot['text'],
         userName = snapshot['userName'],
+        timestamp = snapshot['timestamp'],
         reference = snapshot.reference;
 
   Review.fromUserInput({this.rating, this.text})
       : id = null,
         userName = null,
+        timestamp = Timestamp.now(),
         reference = null;
 
   factory Review.random() {

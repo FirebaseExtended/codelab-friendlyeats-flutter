@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import './model/data.dart' as data;
+import './model/values.dart' as hardcoded;
 import './model/filter.dart';
 
 class FilterDialog extends StatefulWidget {
@@ -63,8 +63,8 @@ class _FilterDialogState extends State<FilterDialog> {
   }
 
   Widget _buildCuisineDropdown({String selected, Function onChanged}) {
-    List<String> values = [null, ...data.cuisines];
-    List<String> labels = ['Any Cuisine', ...data.cuisines];
+    List<String> values = [null, ...hardcoded.cuisines];
+    List<String> labels = ['Any Cuisine', ...hardcoded.cuisines];
     return _buildDropdownRow<String>(
       labels: labels,
       values: values,
@@ -75,8 +75,8 @@ class _FilterDialogState extends State<FilterDialog> {
   }
 
   Widget _buildLocationDropdown({String selected, Function onChanged}) {
-    List<String> values = [null, ...data.locations];
-    List<String> labels = ['Any Location', ...data.locations];
+    List<String> values = [null, ...hardcoded.locations];
+    List<String> labels = ['Any Location', ...hardcoded.locations];
     return _buildDropdownRow<String>(
       labels: labels,
       values: values,

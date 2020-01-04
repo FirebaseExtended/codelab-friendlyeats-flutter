@@ -9,6 +9,7 @@ import './empty_list.dart';
 import './filter_bar.dart';
 import './filter_dialog.dart';
 import './model/filter.dart';
+import './model/data.dart' as data;
 import './model/restaurant.dart';
 import './restaurant_grid.dart';
 import './restaurant_page.dart';
@@ -25,7 +26,8 @@ class FriendlyEatsHomePage extends StatefulWidget {
 class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   _FriendlyEatsHomePageState() {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
-      _currentSubscription = _loadAllRestaurants().listen(_updateRestaurants);
+      _currentSubscription =
+          data.loadAllRestaurants().listen(_updateRestaurants);
     });
   }
 
@@ -40,51 +42,10 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   List<Restaurant> _restaurants = <Restaurant>[];
   Filter _filter;
 
-  Stream<QuerySnapshot> _loadAllRestaurants() {
-    return Firestore.instance
-        .collection('restaurants')
-        .orderBy('avgRating', descending: true)
-        .limit(50)
-        .snapshots();
-  }
-
-  Stream<QuerySnapshot> _loadFilteredRestaurants(Filter filter) {
-    Query collection = Firestore.instance.collection('restaurants');
-    if (filter.cuisine != null) {
-      collection = collection.where('category', isEqualTo: filter.cuisine);
-    }
-    if (filter.location != null) {
-      collection = collection.where('city', isEqualTo: filter.location);
-    }
-    if (filter.price != null) {
-      collection = collection.where('price', isEqualTo: filter.price);
-    }
-    return collection
-        .orderBy(filter.sort ?? 'avgRating', descending: true)
-        .limit(50)
-        .snapshots();
-  }
-
   void _updateRestaurants(QuerySnapshot snapshot) {
     setState(() {
       _isLoading = false;
-      _restaurants = snapshot.documents.map((DocumentSnapshot doc) {
-        return Restaurant.fromSnapshot(doc);
-      }).toList();
-    });
-  }
-
-  Future<void> _addRestaurant(Restaurant restaurant) async {
-    CollectionReference restaurants =
-        Firestore.instance.collection('restaurants');
-    return restaurants.add({
-      'avgRating': 0,
-      'category': restaurant.cuisine,
-      'city': restaurant.location,
-      'name': restaurant.name,
-      'numRatings': 0,
-      'photo': restaurant.imageUrl,
-      'price': restaurant.price,
+      _restaurants = data.getRestaurantsFromQuery(snapshot);
     });
   }
 
@@ -92,7 +53,7 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
     // Await adding a random number of random reviews
     int numReviews = Random().nextInt(10) + 20;
     for (int i = 0; i < numReviews; i++) {
-      await _addRestaurant(Restaurant.random());
+      await data.addRestaurant(Restaurant.random());
     }
   }
 
@@ -108,10 +69,10 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
         _filter = filter;
         if (filter.isDefault) {
           _currentSubscription =
-              _loadAllRestaurants().listen(_updateRestaurants);
+              data.loadAllRestaurants().listen(_updateRestaurants);
         } else {
           _currentSubscription =
-              _loadFilteredRestaurants(filter).listen(_updateRestaurants);
+              data.loadFilteredRestaurants(filter).listen(_updateRestaurants);
         }
       });
     }
