@@ -19,14 +19,14 @@ class FilterDialog extends StatefulWidget {
 class _FilterDialogState extends State<FilterDialog> {
   _FilterDialogState({Filter filter}) {
     if (filter != null && !filter.isDefault) {
-      _cuisine = filter.cuisine;
+      _category = filter.category;
       _location = filter.location;
       _price = filter.price;
       _sort = filter.sort;
     }
   }
 
-  String _cuisine;
+  String _category;
   String _location;
   int _price;
   String _sort;
@@ -62,9 +62,9 @@ class _FilterDialogState extends State<FilterDialog> {
     ]);
   }
 
-  Widget _buildCuisineDropdown({String selected, Function onChanged}) {
-    List<String> values = [null, ...hardcoded.cuisines];
-    List<String> labels = ['Any Cuisine', ...hardcoded.cuisines];
+  Widget _buildCategoryDropdown({String selected, Function onChanged}) {
+    List<String> values = [null, ...hardcoded.categories];
+    List<String> labels = ['Any Cuisine', ...hardcoded.categories];
     return _buildDropdownRow<String>(
       labels: labels,
       values: values,
@@ -129,11 +129,11 @@ class _FilterDialogState extends State<FilterDialog> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            _buildCuisineDropdown(
-                selected: _cuisine,
+            _buildCategoryDropdown(
+                selected: _category,
                 onChanged: (String value) {
                   setState(() {
-                    _cuisine = value;
+                    _category = value;
                   });
                 }),
             _buildLocationDropdown(
@@ -170,7 +170,7 @@ class _FilterDialogState extends State<FilterDialog> {
           onPressed: () => Navigator.pop(
               context,
               Filter(
-                cuisine: _cuisine,
+                category: _category,
                 location: _location,
                 price: _price,
                 sort: _sort,

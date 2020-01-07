@@ -51,7 +51,7 @@ final List<String> locations = <String>[
   'Washington',
 ];
 
-final List<String> cuisines = <String>[
+final List<String> categories = <String>[
   'Brunch',
   'Burgers',
   'Coffee',
@@ -136,8 +136,8 @@ String getMockName() {
   return '${_mockWords[firstWord]} ${_mockWords[nextWord]}';
 }
 
-String getMockCuisine() {
-  return cuisines[random.nextInt(cuisines.length)];
+String getRandomCategory() {
+  return categories[random.nextInt(categories.length)];
 }
 
 String getMockCity() {

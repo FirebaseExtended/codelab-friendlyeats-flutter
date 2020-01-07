@@ -12,12 +12,12 @@ class FilterBar extends StatelessWidget {
   final VoidCallback _onPressed;
   final Filter _filter;
 
-  List<InlineSpan> _buildCuisineSpans(Filter filter) {
+  List<InlineSpan> _buildCategorySpans(Filter filter) {
     List<InlineSpan> widgets = [];
-    if (filter == null || filter.isDefault || filter.cuisine == null) {
+    if (filter == null || filter.isDefault || filter.category == null) {
       widgets.add(TextSpan(text: 'All Restaurants', style: _kBold));
     } else {
-      widgets.add(TextSpan(text: '${filter.cuisine}', style: _kBold));
+      widgets.add(TextSpan(text: '${filter.category}', style: _kBold));
       widgets.add(TextSpan(text: ' places'));
     }
     return widgets;
@@ -35,7 +35,7 @@ class FilterBar extends StatelessWidget {
 
   List<InlineSpan> _buildTitleSpans(Filter filter) {
     List<InlineSpan> widgets = [];
-    widgets.addAll(_buildCuisineSpans(filter));
+    widgets.addAll(_buildCategorySpans(filter));
     if (filter != null && !filter.isDefault) {
       widgets.addAll(_buildPriceSpans(filter));
     }

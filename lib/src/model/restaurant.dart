@@ -7,7 +7,7 @@ import './values.dart';
 class Restaurant {
   final String id;
   final String name;
-  final String cuisine;
+  final String category;
   final String location;
   final double rating;
   final int numRatings;
@@ -16,7 +16,7 @@ class Restaurant {
   final DocumentReference reference;
 
   Restaurant._(
-      {this.name, this.cuisine, this.location, this.price, this.imageUrl})
+      {this.name, this.category, this.location, this.price, this.imageUrl})
       : id = null,
         numRatings = 0,
         rating = 0,
@@ -26,7 +26,7 @@ class Restaurant {
       : assert(snapshot != null),
         id = snapshot.documentID,
         name = snapshot['name'],
-        cuisine = snapshot['category'],
+        category = snapshot['category'],
         location = snapshot['city'],
         rating = snapshot['avgRating'].toDouble(),
         numRatings = snapshot['numRatings'],
@@ -36,7 +36,7 @@ class Restaurant {
 
   factory Restaurant.random() {
     return Restaurant._(
-      cuisine: getMockCuisine(),
+      category: getRandomCategory(),
       location: getMockCity(),
       name: getMockName(),
       price: Random().nextInt(3) + 1,

@@ -57,7 +57,7 @@ class RestaurantAppBar extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 2),
               child: Text(
-                '${restaurant.cuisine} ● ${restaurant.location}',
+                '${restaurant.category} ● ${restaurant.location}',
                 style: TextStyle(
                     fontSize: Theme.of(context).textTheme.caption.fontSize),
               ),

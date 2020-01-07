@@ -11,7 +11,7 @@ Future<void> addRestaurant(Restaurant restaurant) async {
       Firestore.instance.collection('restaurants');
   return restaurants.add({
     'avgRating': restaurant.rating,
-    'category': restaurant.cuisine,
+    'category': restaurant.category,
     'city': restaurant.location,
     'name': restaurant.name,
     'numRatings': restaurant.numRatings,
@@ -30,8 +30,8 @@ Stream<QuerySnapshot> loadAllRestaurants() {
 
 Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
   Query collection = Firestore.instance.collection('restaurants');
-  if (filter.cuisine != null) {
-    collection = collection.where('category', isEqualTo: filter.cuisine);
+  if (filter.category != null) {
+    collection = collection.where('category', isEqualTo: filter.category);
   }
   if (filter.location != null) {
     collection = collection.where('city', isEqualTo: filter.location);

@@ -67,7 +67,7 @@ class RestaurantCard extends StatelessWidget {
                   Container(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      '${restaurant.cuisine} ● ${restaurant.location}',
+                      '${restaurant.category} ● ${restaurant.location}',
                       style: Theme.of(context).textTheme.caption,
                     ),
                   ),
