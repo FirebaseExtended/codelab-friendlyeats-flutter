@@ -9,7 +9,7 @@ class Restaurant {
   final String name;
   final String category;
   final String city;
-  final double rating;
+  final double avgRating;
   final int numRatings;
   final int price;
   final String imageUrl;
@@ -19,7 +19,7 @@ class Restaurant {
       {this.name, this.category, this.city, this.price, this.imageUrl})
       : id = null,
         numRatings = 0,
-        rating = 0,
+        avgRating = 0,
         reference = null;
 
   Restaurant.fromSnapshot(DocumentSnapshot snapshot)
@@ -28,7 +28,7 @@ class Restaurant {
         name = snapshot['name'],
         category = snapshot['category'],
         city = snapshot['city'],
-        rating = snapshot['avgRating'].toDouble(),
+        avgRating = snapshot['avgRating'].toDouble(),
         numRatings = snapshot['numRatings'],
         price = snapshot['price'],
         imageUrl = snapshot['photo'],

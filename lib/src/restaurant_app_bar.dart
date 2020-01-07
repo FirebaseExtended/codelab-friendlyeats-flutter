@@ -39,7 +39,7 @@ class RestaurantAppBar extends StatelessWidget {
                   width: 80,
                   alignment: Alignment.bottomLeft,
                   child: StarRating(
-                    rating: restaurant.rating,
+                    rating: restaurant.avgRating,
                     color: Colors.white,
                     size: 16,
                   ),

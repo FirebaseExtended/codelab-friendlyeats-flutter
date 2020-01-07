@@ -61,7 +61,7 @@ class RestaurantCard extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(0, (kIsWeb ? 0 : 2), 0, 4),
                     alignment: Alignment.bottomLeft,
                     child: StarRating(
-                      rating: restaurant.rating,
+                      rating: restaurant.avgRating,
                     ),
                   ),
                   Container(

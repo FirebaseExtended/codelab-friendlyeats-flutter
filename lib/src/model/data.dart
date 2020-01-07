@@ -10,7 +10,7 @@ Future<void> addRestaurant(Restaurant restaurant) async {
   CollectionReference restaurants =
       Firestore.instance.collection('restaurants');
   return restaurants.add({
-    'avgRating': restaurant.rating,
+    'avgRating': restaurant.avgRating,
     'category': restaurant.category,
     'city': restaurant.city,
     'name': restaurant.name,
@@ -71,7 +71,7 @@ Future<void> addReview(
       Restaurant freshRestaurant =
           Restaurant.fromSnapshot(freshRestaurantSnapshot);
       double newAverage =
-          ((freshRestaurant.numRatings * freshRestaurant.rating) +
+          ((freshRestaurant.numRatings * freshRestaurant.avgRating) +
                   review.rating) /
               (freshRestaurant.numRatings + 1);
       transaction.update(restaurant, {
