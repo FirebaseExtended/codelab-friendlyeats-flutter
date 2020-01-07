@@ -1,15 +1,15 @@
 class Filter {
-  final String location;
+  final String city;
   final int price;
   final String category;
   final String sort;
 
   bool get isDefault {
-    return (location == null &&
+    return (city == null &&
         price == null &&
         category == null &&
         sort == null);
   }
 
-  Filter({this.location, this.price, this.category, this.sort});
+  Filter({this.city, this.price, this.category, this.sort});
 }

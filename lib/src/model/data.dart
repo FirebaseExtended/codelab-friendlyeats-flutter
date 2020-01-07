@@ -12,7 +12,7 @@ Future<void> addRestaurant(Restaurant restaurant) async {
   return restaurants.add({
     'avgRating': restaurant.rating,
     'category': restaurant.category,
-    'city': restaurant.location,
+    'city': restaurant.city,
     'name': restaurant.name,
     'numRatings': restaurant.numRatings,
     'photo': restaurant.imageUrl,
@@ -33,8 +33,8 @@ Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
   if (filter.category != null) {
     collection = collection.where('category', isEqualTo: filter.category);
   }
-  if (filter.location != null) {
-    collection = collection.where('city', isEqualTo: filter.location);
+  if (filter.city != null) {
+    collection = collection.where('city', isEqualTo: filter.city);
   }
   if (filter.price != null) {
     collection = collection.where('price', isEqualTo: filter.price);

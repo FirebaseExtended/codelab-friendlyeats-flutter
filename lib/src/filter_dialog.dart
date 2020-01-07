@@ -20,14 +20,14 @@ class _FilterDialogState extends State<FilterDialog> {
   _FilterDialogState({Filter filter}) {
     if (filter != null && !filter.isDefault) {
       _category = filter.category;
-      _location = filter.location;
+      _city = filter.city;
       _price = filter.price;
       _sort = filter.sort;
     }
   }
 
   String _category;
-  String _location;
+  String _city;
   int _price;
   String _sort;
 
@@ -74,9 +74,9 @@ class _FilterDialogState extends State<FilterDialog> {
     );
   }
 
-  Widget _buildLocationDropdown({String selected, Function onChanged}) {
-    List<String> values = [null, ...hardcoded.locations];
-    List<String> labels = ['Any Location', ...hardcoded.locations];
+  Widget _buildCityDropdown({String selected, Function onChanged}) {
+    List<String> values = [null, ...hardcoded.cities];
+    List<String> labels = ['Any Location', ...hardcoded.cities];
     return _buildDropdownRow<String>(
       labels: labels,
       values: values,
@@ -136,11 +136,11 @@ class _FilterDialogState extends State<FilterDialog> {
                     _category = value;
                   });
                 }),
-            _buildLocationDropdown(
-                selected: _location,
+            _buildCityDropdown(
+                selected: _city,
                 onChanged: (String value) {
                   setState(() {
-                    _location = value;
+                    _city = value;
                   });
                 }),
             _buildPriceDropdown(
@@ -171,7 +171,7 @@ class _FilterDialogState extends State<FilterDialog> {
               context,
               Filter(
                 category: _category,
-                location: _location,
+                city: _city,
                 price: _price,
                 sort: _sort,
               )),

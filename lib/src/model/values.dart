@@ -1,6 +1,6 @@
 import 'dart:math';
 
-final List<String> locations = <String>[
+final List<String> cities = <String>[
   'Albuquerque',
   'Arlington',
   'Atlanta',
@@ -140,8 +140,8 @@ String getRandomCategory() {
   return categories[random.nextInt(categories.length)];
 }
 
-String getMockCity() {
-  return locations[random.nextInt(locations.length)];
+String getRandomCity() {
+  return cities[random.nextInt(cities.length)];
 }
 
 String getMockImageUrl() {

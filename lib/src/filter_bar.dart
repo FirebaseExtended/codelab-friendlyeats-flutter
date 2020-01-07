@@ -42,11 +42,11 @@ class FilterBar extends StatelessWidget {
     return widgets;
   }
 
-  List<InlineSpan> _buildLocationSpans(Filter filter) {
+  List<InlineSpan> _buildCitySpans(Filter filter) {
     List<InlineSpan> widgets = [];
-    if (filter.location != null) {
+    if (filter.city != null) {
       widgets.add(TextSpan(text: 'in '));
-      widgets.add(TextSpan(text: '${filter.location} ', style: _kBold));
+      widgets.add(TextSpan(text: '${filter.city} ', style: _kBold));
     }
     return widgets;
   }
@@ -54,7 +54,7 @@ class FilterBar extends StatelessWidget {
   List<InlineSpan> _buildSubtitleSpans(Filter filter) {
     List<InlineSpan> widgets = [];
     if (filter != null) {
-      widgets.addAll(_buildLocationSpans(filter));
+      widgets.addAll(_buildCitySpans(filter));
     }
     if (filter == null || filter.sort == null || filter.sort == 'avgRating') {
       widgets.add(TextSpan(text: 'by rating'));

@@ -8,7 +8,7 @@ class Restaurant {
   final String id;
   final String name;
   final String category;
-  final String location;
+  final String city;
   final double rating;
   final int numRatings;
   final int price;
@@ -16,7 +16,7 @@ class Restaurant {
   final DocumentReference reference;
 
   Restaurant._(
-      {this.name, this.category, this.location, this.price, this.imageUrl})
+      {this.name, this.category, this.city, this.price, this.imageUrl})
       : id = null,
         numRatings = 0,
         rating = 0,
@@ -27,7 +27,7 @@ class Restaurant {
         id = snapshot.documentID,
         name = snapshot['name'],
         category = snapshot['category'],
-        location = snapshot['city'],
+        city = snapshot['city'],
         rating = snapshot['avgRating'].toDouble(),
         numRatings = snapshot['numRatings'],
         price = snapshot['price'],
@@ -37,7 +37,7 @@ class Restaurant {
   factory Restaurant.random() {
     return Restaurant._(
       category: getRandomCategory(),
-      location: getMockCity(),
+      city: getRandomCity(),
       name: getMockName(),
       price: Random().nextInt(3) + 1,
       imageUrl: getMockImageUrl(),
