@@ -66,7 +66,7 @@ final List<String> categories = <String>[
   'Sushi',
 ];
 
-final List<String> _mockWords = <String>[
+final List<String> _words = <String>[
   'Bar',
   'Deli',
   'Diner',
@@ -92,7 +92,7 @@ final List<String> _mockWords = <String>[
   'Eatin\'',
 ];
 
-final Map<int, List<String>> _mockReviewsData = <int, List<String>>{
+final Map<int, List<String>> _reviewTextPerRating = <int, List<String>>{
   1: [
     'Would never eat here again!',
     'Such an awful place!',
@@ -122,18 +122,18 @@ final Map<int, List<String>> _mockReviewsData = <int, List<String>>{
 
 final Random random = Random();
 
-String getMockReview(int rating) {
-  List reviews = _mockReviewsData[rating];
+String getRandomReviewText(int rating) {
+  List reviews = _reviewTextPerRating[rating];
   return reviews[random.nextInt(reviews.length)];
 }
 
-String getMockName() {
-  int firstWord = random.nextInt(_mockWords.length);
+String getRandomName() {
+  int firstWord = random.nextInt(_words.length);
   int nextWord;
   do {
-    nextWord = random.nextInt(_mockWords.length);
+    nextWord = random.nextInt(_words.length);
   } while (firstWord == nextWord);
-  return '${_mockWords[firstWord]} ${_mockWords[nextWord]}';
+  return '${_words[firstWord]} ${_words[nextWord]}';
 }
 
 String getRandomCategory() {

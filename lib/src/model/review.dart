@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './values.dart';
 
+// This is called "ratings" in the backend.
 class Review {
   final String id;
   final double rating;
@@ -30,7 +31,7 @@ class Review {
 
   factory Review.random() {
     int rating = Random().nextInt(4) + 1;
-    String review = getMockReview(rating);
+    String review = getRandomReviewText(rating);
     return Review.fromUserInput(rating: rating.toDouble(), text: review);
   }
 }

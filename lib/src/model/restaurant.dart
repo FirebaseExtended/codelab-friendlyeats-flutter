@@ -38,7 +38,7 @@ class Restaurant {
     return Restaurant._(
       category: getRandomCategory(),
       city: getRandomCity(),
-      name: getMockName(),
+      name: getRandomName(),
       price: Random().nextInt(3) + 1,
       photo: getRandomPhoto(),
     );
