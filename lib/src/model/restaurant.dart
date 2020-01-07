@@ -12,11 +12,11 @@ class Restaurant {
   final double avgRating;
   final int numRatings;
   final int price;
-  final String imageUrl;
+  final String photo;
   final DocumentReference reference;
 
   Restaurant._(
-      {this.name, this.category, this.city, this.price, this.imageUrl})
+      {this.name, this.category, this.city, this.price, this.photo})
       : id = null,
         numRatings = 0,
         avgRating = 0,
@@ -31,7 +31,7 @@ class Restaurant {
         avgRating = snapshot['avgRating'].toDouble(),
         numRatings = snapshot['numRatings'],
         price = snapshot['price'],
-        imageUrl = snapshot['photo'],
+        photo = snapshot['photo'],
         reference = snapshot.reference;
 
   factory Restaurant.random() {
@@ -40,7 +40,7 @@ class Restaurant {
       city: getRandomCity(),
       name: getMockName(),
       price: Random().nextInt(3) + 1,
-      imageUrl: getMockImageUrl(),
+      photo: getRandomPhoto(),
     );
   }
 }

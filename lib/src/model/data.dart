@@ -15,7 +15,7 @@ Future<void> addRestaurant(Restaurant restaurant) async {
     'city': restaurant.city,
     'name': restaurant.name,
     'numRatings': restaurant.numRatings,
-    'photo': restaurant.imageUrl,
+    'photo': restaurant.photo,
     'price': restaurant.price,
   });
 }

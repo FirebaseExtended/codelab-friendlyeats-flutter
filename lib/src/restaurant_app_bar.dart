@@ -68,7 +68,7 @@ class RestaurantAppBar extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Image.network(
-              restaurant.imageUrl,
+              restaurant.photo,
               fit: BoxFit.cover,
             ),
             Image.asset(

@@ -30,7 +30,7 @@ class RestaurantCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(restaurant.imageUrl),
+                      image: NetworkImage(restaurant.photo),
                       fit: BoxFit.cover,
                     ),
                   ),

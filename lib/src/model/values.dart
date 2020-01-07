@@ -144,7 +144,7 @@ String getRandomCity() {
   return cities[random.nextInt(cities.length)];
 }
 
-String getMockImageUrl() {
+String getRandomPhoto() {
   int photoId = random.nextInt(21) + 1;
   return 'https://storage.googleapis.com/firestorequickstarts.appspot.com/food_$photoId.png';
 }
