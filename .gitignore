@@ -34,6 +34,7 @@
 lib/generated_plugin_registrant.dart
 
 # Firebase
+.firebase
 .firebaserc
 
 # Exceptions to above rules.
