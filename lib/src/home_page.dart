@@ -52,7 +52,8 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   void _onAddRandomRestaurantsPressed() async {
     int numReviews = Random().nextInt(10) + 20;
 
-    List<Restaurant> restaurants = List.generate(numReviews, (_) => Restaurant.random());
+    List<Restaurant> restaurants =
+        List.generate(numReviews, (_) => Restaurant.random());
     return data.addRestaurantsBatch(restaurants);
   }
 

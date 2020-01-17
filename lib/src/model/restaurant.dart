@@ -15,8 +15,7 @@ class Restaurant {
   final String photo;
   final DocumentReference reference;
 
-  Restaurant._(
-      {this.name, this.category, this.city, this.price, this.photo})
+  Restaurant._({this.name, this.category, this.city, this.price, this.photo})
       : id = null,
         numRatings = 0,
         avgRating = 0,

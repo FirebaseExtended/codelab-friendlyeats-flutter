@@ -5,10 +5,7 @@ class Filter {
   final String sort;
 
   bool get isDefault {
-    return (city == null &&
-        price == null &&
-        category == null &&
-        sort == null);
+    return (city == null && price == null && category == null && sort == null);
   }
 
   Filter({this.city, this.price, this.category, this.sort});
