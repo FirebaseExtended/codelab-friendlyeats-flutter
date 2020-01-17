@@ -50,11 +50,10 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   }
 
   void _onAddRandomRestaurantsPressed() async {
-    // Await adding a random number of random reviews
     int numReviews = Random().nextInt(10) + 20;
-    for (int i = 0; i < numReviews; i++) {
-      await data.addRestaurant(Restaurant.random());
-    }
+
+    List<Restaurant> restaurants = List.generate(numReviews, (_) => Restaurant.random());
+    return data.addRestaurantsBatch(restaurants);
   }
 
   void _onFilterBarPressed() async {

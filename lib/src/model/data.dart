@@ -20,6 +20,25 @@ Future<void> addRestaurant(Restaurant restaurant) async {
   });
 }
 
+Future<void> addRestaurantsBatch(List<Restaurant> restaurants) async {
+  CollectionReference collection = Firestore.instance.collection('restaurants');
+  WriteBatch batch = Firestore.instance.batch();
+  // Add each restaurant to the batch, and commit all of them at the same time.
+  restaurants.forEach((Restaurant restaurant) {
+    batch.setData(collection.document(), {
+      'avgRating': restaurant.avgRating,
+      'category': restaurant.category,
+      'city': restaurant.city,
+      'name': restaurant.name,
+      'numRatings': restaurant.numRatings,
+      'photo': restaurant.photo,
+      'price': restaurant.price,
+    });
+  });
+
+  return batch.commit();
+}
+
 Stream<QuerySnapshot> loadAllRestaurants() {
   return Firestore.instance
       .collection('restaurants')
