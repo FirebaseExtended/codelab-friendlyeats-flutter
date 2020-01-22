@@ -20,7 +20,25 @@ Future<void> addRestaurant(Restaurant restaurant) async {
   });
 }
 
+Stream<QuerySnapshot> loadAllRestaurants() {
+  return Firestore.instance
+      .collection('restaurants')
+      .orderBy('avgRating', descending: true)
+      .limit(50)
+      .snapshots();
+}
+
+List<Restaurant> getRestaurantsFromQuery(QuerySnapshot snapshot) {
+  return snapshot.documents.map((DocumentSnapshot doc) {
+    return Restaurant.fromSnapshot(doc);
+  }).toList();
+}
+
 Future<void> addRestaurantsBatch(List<Restaurant> restaurants) async {
+  // TODO: Make this faster by using a write batch.
+  // restaurants.forEach((Restaurant restaurant) async {
+  //   await addRestaurant(restaurant);
+  // });
   CollectionReference collection = Firestore.instance.collection('restaurants');
   WriteBatch batch = Firestore.instance.batch();
   // Add each restaurant to the batch, and commit all of them at the same time.
@@ -35,16 +53,45 @@ Future<void> addRestaurantsBatch(List<Restaurant> restaurants) async {
       'price': restaurant.price,
     });
   });
-
   return batch.commit();
 }
 
-Stream<QuerySnapshot> loadAllRestaurants() {
+Future<Restaurant> getRestaurant(String restaurantId) {
   return Firestore.instance
       .collection('restaurants')
-      .orderBy('avgRating', descending: true)
-      .limit(50)
-      .snapshots();
+      .document(restaurantId)
+      .get()
+      .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc));
+}
+
+Future<void> addReview({String restaurantId, Review review}) {
+  DocumentReference restaurant =
+      Firestore.instance.collection('restaurants').document(restaurantId);
+  DocumentReference newReview = restaurant.collection('ratings').document();
+
+  return Firestore.instance.runTransaction((Transaction transaction) {
+    return transaction
+        .get(restaurant)
+        .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc))
+        .then((Restaurant fresh) {
+      int newRatings = fresh.numRatings + 1;
+      double newAverage =
+          ((fresh.numRatings * fresh.avgRating) + review.rating) / newRatings;
+
+      transaction.update(restaurant, {
+        'numRatings': newRatings,
+        'avgRating': newAverage,
+      });
+
+      return transaction.set(newReview, {
+        'rating': review.rating,
+        'text': review.text,
+        'userName': review.userName,
+        'timestamp': review.timestamp ?? FieldValue.serverTimestamp(),
+        'userId': review.userId,
+      });
+    });
+  });
 }
 
 Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
@@ -62,49 +109,4 @@ Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
       .orderBy(filter.sort ?? 'avgRating', descending: true)
       .limit(50)
       .snapshots();
-}
-
-List<Restaurant> getRestaurantsFromQuery(QuerySnapshot snapshot) {
-  return snapshot.documents.map((DocumentSnapshot doc) {
-    return Restaurant.fromSnapshot(doc);
-  }).toList();
-}
-
-Stream<DocumentSnapshot> getRestaurant(String restaurantId) {
-  return Firestore.instance
-      .collection('restaurants')
-      .document(restaurantId)
-      .snapshots();
-}
-
-Future<void> addReview(
-    {String restaurantId, String userId, String userName, Review review}) {
-  CollectionReference collection = Firestore.instance.collection('restaurants');
-  DocumentReference restaurant = collection.document(restaurantId);
-  DocumentReference newReview = restaurant.collection('ratings').document();
-
-  return Firestore.instance.runTransaction((Transaction transaction) {
-    return transaction
-        .get(restaurant)
-        .then((DocumentSnapshot freshRestaurantSnapshot) {
-      Restaurant freshRestaurant =
-          Restaurant.fromSnapshot(freshRestaurantSnapshot);
-      double newAverage =
-          ((freshRestaurant.numRatings * freshRestaurant.avgRating) +
-                  review.rating) /
-              (freshRestaurant.numRatings + 1);
-      transaction.update(restaurant, {
-        'numRatings': freshRestaurant.numRatings + 1,
-        'avgRating': newAverage,
-      });
-
-      return transaction.set(newReview, {
-        'rating': review.rating,
-        'text': review.text,
-        'userName': userName,
-        'timestamp': FieldValue.serverTimestamp(),
-        'userId': userId,
-      });
-    });
-  });
 }
