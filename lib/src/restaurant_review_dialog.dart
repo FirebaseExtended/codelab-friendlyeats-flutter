@@ -6,13 +6,25 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import './model/review.dart';
 
 class RestaurantReviewDialog extends StatefulWidget {
-  RestaurantReviewDialog({Key key}) : super(key: key);
+  final String _userName;
+  final String _userId;
+
+  RestaurantReviewDialog({String userName, String userId, Key key})
+      : this._userName = userName,
+        this._userId = userId,
+        super(key: key);
 
   @override
-  _RestaurantReviewDialogState createState() => _RestaurantReviewDialogState();
+  _RestaurantReviewDialogState createState() =>
+      _RestaurantReviewDialogState(userName: _userName, userId: _userId);
 }
 
 class _RestaurantReviewDialogState extends State<RestaurantReviewDialog> {
+  _RestaurantReviewDialogState({this.userName, this.userId});
+
+  final String userName;
+  final String userId;
+
   double rating = 0;
   String review;
 
@@ -70,7 +82,12 @@ class _RestaurantReviewDialogState extends State<RestaurantReviewDialog> {
         RaisedButton(
             child: Text('SAVE'),
             onPressed: () => Navigator.pop(
-                context, Review.fromUserInput(rating: rating, text: review))),
+                context,
+                Review.fromUserInput(
+                    rating: rating,
+                    text: review,
+                    userId: userId,
+                    userName: userName))),
       ],
     );
   }
