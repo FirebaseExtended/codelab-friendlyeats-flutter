@@ -33,11 +33,17 @@ class _FriendlyEatsRestaurantPageState
     extends State<FriendlyEatsRestaurantPage> {
   _FriendlyEatsRestaurantPageState({@required String restaurantId}) {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
-      _currentRestaurantSubscription =
-          data.getRestaurant(restaurantId).listen((DocumentSnapshot snap) {
+      data.getRestaurant(restaurantId).then((Restaurant restaurant) {
         _currentReviewSubscription?.cancel();
         setState(() {
-          _restaurant = Restaurant.fromSnapshot(snap);
+          if (auth.user.displayName == null || auth.user.displayName.isEmpty) {
+            _userName = 'Anonymous (${kIsWeb ? "Web" : "Mobile"})';
+          } else {
+            _userName = auth.user.displayName;
+          }
+          _restaurant = restaurant;
+          _userId = auth.user.uid;
+
           // Initialize the reviews snapshot...
           _currentReviewSubscription = _restaurant.reference
               .collection('ratings')
@@ -58,37 +64,32 @@ class _FriendlyEatsRestaurantPageState
 
   @override
   void dispose() {
-    _currentRestaurantSubscription?.cancel();
     _currentReviewSubscription?.cancel();
     super.dispose();
   }
 
   bool _isLoading = true;
-  StreamSubscription<DocumentSnapshot> _currentRestaurantSubscription;
   StreamSubscription<QuerySnapshot> _currentReviewSubscription;
 
   Restaurant _restaurant;
+  String _userId;
+  String _userName;
   List<Review> _reviews = <Review>[];
-
-  Future<void> _addReview(String restaurantId, Review newReview) async {
-    String userId = await FirebaseAuth.instance
-        .currentUser()
-        .then((FirebaseUser user) => user.uid);
-    String userName = 'Anonymous (${kIsWeb ? "Web" : "Mobile"})';
-
-    return data.addReview(
-        restaurantId: restaurantId,
-        userId: userId,
-        userName: userName,
-        review: newReview);
-  }
 
   void _onCreateReviewPressed(BuildContext context) async {
     Review newReview = await showDialog<Review>(
-        context: context, builder: (_) => RestaurantReviewDialog());
+      context: context,
+      builder: (_) => RestaurantReviewDialog(
+        userId: _userId,
+        userName: _userName,
+      ),
+    );
     if (newReview != null) {
       // Save the review
-      return _addReview(_restaurant.id, newReview);
+      return data.addReview(
+        restaurantId: _restaurant.id,
+        review: newReview,
+      );
     }
   }
 
@@ -96,7 +97,13 @@ class _FriendlyEatsRestaurantPageState
     // Await adding a random number of random reviews
     int numReviews = Random().nextInt(5) + 5;
     for (int i = 0; i < numReviews; i++) {
-      await _addReview(_restaurant.id, Review.random());
+      await data.addReview(
+        restaurantId: _restaurant.id,
+        review: Review.random(
+          userId: _userId,
+          userName: _userName,
+        ),
+      );
     }
   }
 
