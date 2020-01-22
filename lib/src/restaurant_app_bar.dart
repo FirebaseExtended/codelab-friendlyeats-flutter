@@ -71,9 +71,17 @@ class RestaurantAppBar extends StatelessWidget {
               restaurant.photo,
               fit: BoxFit.cover,
             ),
-            Image.asset(
-              'assets/shadow.png',
-              fit: BoxFit.fill,
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    const Color(0x00000000),
+                    const Color(0xAA000000),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
