@@ -18,9 +18,7 @@ environment:
 
 dependencies:
   firebase_auth: ^0.15.3
-  cloud_firestore:
-    path:
-      ../flutterfire/packages/cloud_firestore/cloud_firestore
+  cloud_firestore: ^0.13.2
   responsive_grid: ^1.1.1
   smooth_star_rating: ^1.0.4+2
   sliver_fab: ^1.0.0

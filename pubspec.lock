@@ -39,10 +39,10 @@ packages:
   cloud_firestore:
     dependency: "direct main"
     description:
-      path: "../flutterfire/packages/cloud_firestore/cloud_firestore"
-      relative: true
-    source: path
-    version: "0.13.1"
+      name: cloud_firestore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.2"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -53,10 +53,10 @@ packages:
   cloud_firestore_web:
     dependency: transitive
     description:
-      path: "../flutterfire/packages/cloud_firestore/cloud_firestore_web"
-      relative: true
-    source: path
-    version: "0.1.0"
+      name: cloud_firestore_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0+1"
   collection:
     dependency: transitive
     description:
