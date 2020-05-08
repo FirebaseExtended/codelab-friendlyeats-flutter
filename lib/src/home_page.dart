@@ -118,10 +118,8 @@ class _HomePageState extends State<HomePage> {
                       restaurants: _restaurants,
                       onRestaurantPressed: (id) {
                         // TODO: Add deep links on web
-                        Navigator.pushNamed(
-                            context, RestaurantPage.route,
-                            arguments:
-                                RestaurantPageArguments(id: id));
+                        Navigator.pushNamed(context, RestaurantPage.route,
+                            arguments: RestaurantPageArguments(id: id));
                       })
                   : EmptyListView(
                       child: Text('FriendlyEats has no restaurants yet!'),

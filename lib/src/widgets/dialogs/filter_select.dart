@@ -27,7 +27,8 @@ class FilterSelectDialog extends StatefulWidget {
   final Filter _filter;
 
   @override
-  _FilterSelectDialogState createState() => _FilterSelectDialogState(filter: _filter);
+  _FilterSelectDialogState createState() =>
+      _FilterSelectDialogState(filter: _filter);
 }
 
 class _FilterSelectDialogState extends State<FilterSelectDialog> {

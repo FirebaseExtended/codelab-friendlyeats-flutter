@@ -25,8 +25,7 @@ class FriendlyEatsApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case RestaurantPage.route:
-            final RestaurantPageArguments arguments =
-                settings.arguments;
+            final RestaurantPageArguments arguments = settings.arguments;
             return MaterialPageRoute(
                 builder: (context) => RestaurantPage(
                       restaurantId: arguments.id,
@@ -38,8 +37,7 @@ class FriendlyEatsApp extends StatelessWidget {
             //           restaurantId: 'lV81npEeboEActMpUJjn',
             //         ));
             // Everything defaults to home, but maybe we want a custom 404 here
-            return MaterialPageRoute(
-                builder: (context) => HomePage());
+            return MaterialPageRoute(builder: (context) => HomePage());
         }
       },
     );

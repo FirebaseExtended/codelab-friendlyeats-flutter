@@ -43,8 +43,7 @@ class RestaurantPage extends StatefulWidget {
       _RestaurantPageState(restaurantId: _restaurantId);
 }
 
-class _RestaurantPageState
-    extends State<RestaurantPage> {
+class _RestaurantPageState extends State<RestaurantPage> {
   _RestaurantPageState({@required String restaurantId}) {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
       data.getRestaurant(restaurantId).then((Restaurant restaurant) {
