@@ -47,8 +47,8 @@ class _FilterDialogState extends State<FilterDialog> {
 
   Widget _buildDropdown<T>(
       List labels, List values, dynamic selected, Function onChanged) {
-    List<DropdownMenuItem<T>> items = [];
-    for (int i = 0; i < values.length; i++) {
+    final items = [];
+    for (var i = 0; i < values.length; i++) {
       items.add(DropdownMenuItem<T>(value: values[i], child: Text(labels[i])));
     }
     return DropdownButton<T>(
@@ -77,8 +77,8 @@ class _FilterDialogState extends State<FilterDialog> {
   }
 
   Widget _buildCategoryDropdown({String selected, Function onChanged}) {
-    List<String> values = [null, ...hardcoded.categories];
-    List<String> labels = ['Any Cuisine', ...hardcoded.categories];
+    final values = [null, ...hardcoded.categories];
+    final labels = ['Any Cuisine', ...hardcoded.categories];
     return _buildDropdownRow<String>(
       labels: labels,
       values: values,
@@ -89,8 +89,8 @@ class _FilterDialogState extends State<FilterDialog> {
   }
 
   Widget _buildCityDropdown({String selected, Function onChanged}) {
-    List<String> values = [null, ...hardcoded.cities];
-    List<String> labels = ['Any Location', ...hardcoded.cities];
+    final values = [null, ...hardcoded.cities];
+    final labels = ['Any Location', ...hardcoded.cities];
     return _buildDropdownRow<String>(
       labels: labels,
       values: values,
@@ -101,8 +101,8 @@ class _FilterDialogState extends State<FilterDialog> {
   }
 
   Widget _buildPriceDropdown({int selected, Function onChanged}) {
-    List<int> values = [null, 1, 2, 3, 4];
-    List<String> labels = ['Any Price', '\$', '\$\$', '\$\$\$', '\$\$\$\$'];
+    final values = [null, 1, 2, 3, 4];
+    final labels = ['Any Price', '\$', '\$\$', '\$\$\$', '\$\$\$\$'];
     return _buildDropdownRow<int>(
       labels: labels,
       values: values,
@@ -113,8 +113,8 @@ class _FilterDialogState extends State<FilterDialog> {
   }
 
   Widget _buildSortDropdown({String selected, Function onChanged}) {
-    List<String> values = ['avgRating', 'numRatings'];
-    List<String> labels = ['Rating', 'Reviews'];
+    final values = ['avgRating', 'numRatings'];
+    final labels = ['Rating', 'Reviews'];
     return _buildDropdownRow<String>(
       labels: labels,
       values: values,

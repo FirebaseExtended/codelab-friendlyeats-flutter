@@ -62,11 +62,11 @@ class RestaurantCard extends StatelessWidget {
                       Expanded(
                         child: Text(
                           restaurant.name,
-                          style: Theme.of(context).textTheme.title,
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
                       Text(
-                        List.filled(restaurant.price, "\$").join(),
+                        '\$' * restaurant.price,
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ],

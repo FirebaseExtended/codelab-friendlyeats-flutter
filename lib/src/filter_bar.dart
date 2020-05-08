@@ -27,7 +27,7 @@ class FilterBar extends StatelessWidget {
   final Filter _filter;
 
   List<InlineSpan> _buildCategorySpans(Filter filter) {
-    List<InlineSpan> widgets = [];
+    final widgets = [];
     if (filter == null || filter.isDefault || filter.category == null) {
       widgets.add(TextSpan(text: 'All Restaurants', style: _kBold));
     } else {
@@ -38,17 +38,16 @@ class FilterBar extends StatelessWidget {
   }
 
   List<InlineSpan> _buildPriceSpans(Filter filter) {
-    List<InlineSpan> widgets = [];
+    final widgets = [];
     if (filter.price != null) {
       widgets.add(TextSpan(text: ' of '));
-      widgets.add(TextSpan(
-          text: List.filled(filter.price, "\$").join(), style: _kBold));
+      widgets.add(TextSpan(text: '\$' * filter.price, style: _kBold));
     }
     return widgets;
   }
 
   List<InlineSpan> _buildTitleSpans(Filter filter) {
-    List<InlineSpan> widgets = [];
+    final widgets = [];
     widgets.addAll(_buildCategorySpans(filter));
     if (filter != null && !filter.isDefault) {
       widgets.addAll(_buildPriceSpans(filter));
@@ -57,7 +56,7 @@ class FilterBar extends StatelessWidget {
   }
 
   List<InlineSpan> _buildCitySpans(Filter filter) {
-    List<InlineSpan> widgets = [];
+    final widgets = [];
     if (filter.city != null) {
       widgets.add(TextSpan(text: 'in '));
       widgets.add(TextSpan(text: '${filter.city} ', style: _kBold));
@@ -66,7 +65,7 @@ class FilterBar extends StatelessWidget {
   }
 
   List<InlineSpan> _buildSubtitleSpans(Filter filter) {
-    List<InlineSpan> widgets = [];
+    final widgets = [];
     if (filter != null) {
       widgets.addAll(_buildCitySpans(filter));
     }
@@ -96,7 +95,7 @@ class FilterBar extends StatelessWidget {
                   RichText(
                     overflow: TextOverflow.ellipsis,
                     text: TextSpan(
-                      style: Theme.of(context).textTheme.body1,
+                      style: Theme.of(context).textTheme.bodyText2,
                       children: _buildTitleSpans(_filter),
                     ),
                   ),

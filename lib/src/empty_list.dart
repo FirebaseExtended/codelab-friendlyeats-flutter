@@ -24,8 +24,8 @@ class EmptyListView extends StatelessWidget {
   final Function onPressed;
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double imageSize = 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    var imageSize = 600.0;
     if (screenWidth < 640) {
       imageSize = screenWidth * .66;
     }

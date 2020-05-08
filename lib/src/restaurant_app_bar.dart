@@ -61,7 +61,7 @@ class RestaurantAppBar extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 6),
                   child: Text(
-                    List.filled(restaurant.price, "\$").join(),
+                    '\$' * restaurant.price,
                     style: TextStyle(
                         fontSize: Theme.of(context).textTheme.caption.fontSize),
                   ),

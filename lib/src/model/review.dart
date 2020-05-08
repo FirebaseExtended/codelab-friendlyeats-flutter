@@ -45,8 +45,8 @@ class Review {
         reference = null;
 
   factory Review.random({String userName, String userId}) {
-    int rating = Random().nextInt(4) + 1;
-    String review = getRandomReviewText(rating);
+    final rating = Random().nextInt(4) + 1;
+    final review = getRandomReviewText(rating);
     return Review.fromUserInput(
         rating: rating.toDouble(),
         text: review,

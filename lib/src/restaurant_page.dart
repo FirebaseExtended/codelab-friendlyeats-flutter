@@ -91,7 +91,7 @@ class _FriendlyEatsRestaurantPageState
   List<Review> _reviews = <Review>[];
 
   void _onCreateReviewPressed(BuildContext context) async {
-    Review newReview = await showDialog<Review>(
+    final newReview = await showDialog<Review>(
       context: context,
       builder: (_) => RestaurantReviewDialog(
         userId: _userId,
@@ -109,8 +109,8 @@ class _FriendlyEatsRestaurantPageState
 
   void _onAddRandomReviewsPressed() async {
     // Await adding a random number of random reviews
-    int numReviews = Random().nextInt(5) + 5;
-    for (int i = 0; i < numReviews; i++) {
+    final numReviews = Random().nextInt(5) + 5;
+    for (var i = 0; i < numReviews; i++) {
       await data.addReview(
         restaurantId: _restaurant.id,
         review: Review.random(

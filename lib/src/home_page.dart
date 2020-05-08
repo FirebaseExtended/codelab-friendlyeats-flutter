@@ -63,21 +63,20 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
     });
   }
 
-  void _onAddRandomRestaurantsPressed() async {
-    int numReviews = Random().nextInt(10) + 20;
+  Future<void> _onAddRandomRestaurantsPressed() {
+    final numReviews = Random().nextInt(10) + 20;
 
-    List<Restaurant> restaurants =
-        List.generate(numReviews, (_) => Restaurant.random());
+    final restaurants = List.generate(numReviews, (_) => Restaurant.random());
     return data.addRestaurantsBatch(restaurants);
   }
 
-  void _onFilterBarPressed() async {
-    Filter filter = await showDialog<Filter>(
+  Future<void> _onFilterBarPressed() async {
+    final filter = await showDialog<Filter>(
       context: context,
       builder: (_) => FilterDialog(filter: _filter),
     );
     if (filter != null) {
-      _currentSubscription?.cancel();
+      await _currentSubscription?.cancel();
       setState(() {
         _isLoading = true;
         _filter = filter;
@@ -118,7 +117,7 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
                   ? RestaurantGrid(
                       restaurants: _restaurants,
                       onRestaurantPressed: (id) {
-                        // TODO: How can I get deep links on web?
+                        // TODO: Add deep links on web
                         Navigator.pushNamed(
                             context, FriendlyEatsRestaurantPage.route,
                             arguments:

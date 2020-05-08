@@ -137,13 +137,13 @@ final Map<int, List<String>> _reviewTextPerRating = <int, List<String>>{
 final Random random = Random();
 
 String getRandomReviewText(int rating) {
-  List reviews = _reviewTextPerRating[rating];
+  final reviews = _reviewTextPerRating[rating];
   return reviews[random.nextInt(reviews.length)];
 }
 
 String getRandomName() {
-  int firstWord = random.nextInt(_words.length);
-  int nextWord;
+  final firstWord = random.nextInt(_words.length);
+  var nextWord;
   do {
     nextWord = random.nextInt(_words.length);
   } while (firstWord == nextWord);
@@ -159,6 +159,6 @@ String getRandomCity() {
 }
 
 String getRandomPhoto() {
-  int photoId = random.nextInt(21) + 1;
+  final photoId = random.nextInt(21) + 1;
   return 'https://storage.googleapis.com/firestorequickstarts.appspot.com/food_$photoId.png';
 }

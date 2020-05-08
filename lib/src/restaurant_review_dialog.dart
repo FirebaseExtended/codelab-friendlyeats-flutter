@@ -24,8 +24,8 @@ class RestaurantReviewDialog extends StatefulWidget {
   final String _userId;
 
   RestaurantReviewDialog({String userName, String userId, Key key})
-      : this._userName = userName,
-        this._userId = userId,
+      : _userName = userName,
+        _userId = userId,
         super(key: key);
 
   @override
@@ -62,7 +62,7 @@ class _RestaurantReviewDialogState extends State<RestaurantReviewDialog> {
                 borderColor: Colors.grey,
                 size: 32,
                 onRatingChanged: (double value) {
-                  if (this.mounted) {
+                  if (mounted) {
                     setState(() {
                       rating = value;
                     });
@@ -77,7 +77,7 @@ class _RestaurantReviewDialogState extends State<RestaurantReviewDialog> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 onChanged: (String value) {
-                  if (this.mounted) {
+                  if (mounted) {
                     setState(() {
                       review = value;
                     });

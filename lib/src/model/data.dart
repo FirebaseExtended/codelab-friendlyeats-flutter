@@ -21,8 +21,7 @@ import './review.dart';
 // This is the file that Codelab users will primarily work on.
 
 Future<void> addRestaurant(Restaurant restaurant) async {
-  CollectionReference restaurants =
-      Firestore.instance.collection('restaurants');
+  final restaurants = Firestore.instance.collection('restaurants');
   return restaurants.add({
     'avgRating': restaurant.avgRating,
     'category': restaurant.category,
@@ -53,8 +52,8 @@ Future<void> addRestaurantsBatch(List<Restaurant> restaurants) async {
   // restaurants.forEach((Restaurant restaurant) async {
   //   await addRestaurant(restaurant);
   // });
-  CollectionReference collection = Firestore.instance.collection('restaurants');
-  WriteBatch batch = Firestore.instance.batch();
+  final collection = Firestore.instance.collection('restaurants');
+  final batch = Firestore.instance.batch();
   // Add each restaurant to the batch, and commit all of them at the same time.
   restaurants.forEach((Restaurant restaurant) {
     batch.setData(collection.document(), {
@@ -79,17 +78,17 @@ Future<Restaurant> getRestaurant(String restaurantId) {
 }
 
 Future<void> addReview({String restaurantId, Review review}) {
-  DocumentReference restaurant =
+  final restaurant =
       Firestore.instance.collection('restaurants').document(restaurantId);
-  DocumentReference newReview = restaurant.collection('ratings').document();
+  final newReview = restaurant.collection('ratings').document();
 
   return Firestore.instance.runTransaction((Transaction transaction) {
     return transaction
         .get(restaurant)
         .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc))
         .then((Restaurant fresh) {
-      int newRatings = fresh.numRatings + 1;
-      double newAverage =
+      final newRatings = fresh.numRatings + 1;
+      final newAverage =
           ((fresh.numRatings * fresh.avgRating) + review.rating) / newRatings;
 
       transaction.update(restaurant, {
