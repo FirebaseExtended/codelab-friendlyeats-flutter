@@ -15,8 +15,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import './model/restaurant.dart';
-import './restaurant_star_rating.dart';
+import '../model/restaurant.dart';
+import 'stars.dart';
 
 class RestaurantCard extends StatelessWidget {
   RestaurantCard({

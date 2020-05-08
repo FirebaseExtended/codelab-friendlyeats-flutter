@@ -21,31 +21,31 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sliver_fab/sliver_fab.dart';
 
-import './empty_list.dart';
-import './model/data.dart' as data;
-import './model/restaurant.dart';
-import './model/review.dart';
-import './restaurant_app_bar.dart';
-import './restaurant_review.dart';
-import './restaurant_review_dialog.dart';
+import 'widgets/empty_list.dart';
+import 'model/data.dart' as data;
+import 'model/restaurant.dart';
+import 'model/review.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/review.dart';
+import 'widgets/dialogs/review_create.dart';
 
-class FriendlyEatsRestaurantPage extends StatefulWidget {
+class RestaurantPage extends StatefulWidget {
   static const route = '/restaurant';
 
   final String _restaurantId;
 
-  FriendlyEatsRestaurantPage({Key key, @required String restaurantId})
+  RestaurantPage({Key key, @required String restaurantId})
       : _restaurantId = restaurantId,
         super(key: key);
 
   @override
-  _FriendlyEatsRestaurantPageState createState() =>
-      _FriendlyEatsRestaurantPageState(restaurantId: _restaurantId);
+  _RestaurantPageState createState() =>
+      _RestaurantPageState(restaurantId: _restaurantId);
 }
 
-class _FriendlyEatsRestaurantPageState
-    extends State<FriendlyEatsRestaurantPage> {
-  _FriendlyEatsRestaurantPageState({@required String restaurantId}) {
+class _RestaurantPageState
+    extends State<RestaurantPage> {
+  _RestaurantPageState({@required String restaurantId}) {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
       data.getRestaurant(restaurantId).then((Restaurant restaurant) {
         _currentReviewSubscription?.cancel();
@@ -93,7 +93,7 @@ class _FriendlyEatsRestaurantPageState
   void _onCreateReviewPressed(BuildContext context) async {
     final newReview = await showDialog<Review>(
       context: context,
-      builder: (_) => RestaurantReviewDialog(
+      builder: (_) => ReviewCreateDialog(
         userId: _userId,
         userName: _userName,
       ),
@@ -165,8 +165,8 @@ class _FriendlyEatsRestaurantPageState
   }
 }
 
-class FriendlyEatsRestaurantPageArguments {
+class RestaurantPageArguments {
   final String id;
 
-  FriendlyEatsRestaurantPageArguments({@required this.id});
+  RestaurantPageArguments({@required this.id});
 }

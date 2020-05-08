@@ -17,24 +17,24 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-import './model/review.dart';
+import '../../model/review.dart';
 
-class RestaurantReviewDialog extends StatefulWidget {
+class ReviewCreateDialog extends StatefulWidget {
   final String _userName;
   final String _userId;
 
-  RestaurantReviewDialog({String userName, String userId, Key key})
+  ReviewCreateDialog({String userName, String userId, Key key})
       : _userName = userName,
         _userId = userId,
         super(key: key);
 
   @override
-  _RestaurantReviewDialogState createState() =>
-      _RestaurantReviewDialogState(userName: _userName, userId: _userId);
+  _ReviewCreateDialogState createState() =>
+      _ReviewCreateDialogState(userName: _userName, userId: _userId);
 }
 
-class _RestaurantReviewDialogState extends State<RestaurantReviewDialog> {
-  _RestaurantReviewDialogState({this.userName, this.userId});
+class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
+  _ReviewCreateDialogState({this.userName, this.userId});
 
   final String userName;
   final String userId;

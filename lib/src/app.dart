@@ -24,22 +24,22 @@ class FriendlyEatsApp extends StatelessWidget {
       title: 'FriendlyEats',
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case FriendlyEatsRestaurantPage.route:
-            final FriendlyEatsRestaurantPageArguments arguments =
+          case RestaurantPage.route:
+            final RestaurantPageArguments arguments =
                 settings.arguments;
             return MaterialPageRoute(
-                builder: (context) => FriendlyEatsRestaurantPage(
+                builder: (context) => RestaurantPage(
                       restaurantId: arguments.id,
                     ));
             break;
           default:
             // return MaterialPageRoute(
-            //     builder: (context) => FriendlyEatsRestaurantPage(
+            //     builder: (context) => RestaurantPage(
             //           restaurantId: 'lV81npEeboEActMpUJjn',
             //         ));
             // Everything defaults to home, but maybe we want a custom 404 here
             return MaterialPageRoute(
-                builder: (context) => FriendlyEatsHomePage());
+                builder: (context) => HomePage());
         }
       },
     );

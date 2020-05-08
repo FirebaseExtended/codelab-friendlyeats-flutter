@@ -16,22 +16,22 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import './model/values.dart' as hardcoded;
-import './model/filter.dart';
+import '../../model/values.dart' as hardcoded;
+import '../../model/filter.dart';
 
-class FilterDialog extends StatefulWidget {
-  FilterDialog({Key key, Filter filter})
+class FilterSelectDialog extends StatefulWidget {
+  FilterSelectDialog({Key key, Filter filter})
       : _filter = filter,
         super(key: key);
 
   final Filter _filter;
 
   @override
-  _FilterDialogState createState() => _FilterDialogState(filter: _filter);
+  _FilterSelectDialogState createState() => _FilterSelectDialogState(filter: _filter);
 }
 
-class _FilterDialogState extends State<FilterDialog> {
-  _FilterDialogState({Filter filter}) {
+class _FilterSelectDialogState extends State<FilterSelectDialog> {
+  _FilterSelectDialogState({Filter filter}) {
     if (filter != null && !filter.isDefault) {
       _category = filter.category;
       _city = filter.city;

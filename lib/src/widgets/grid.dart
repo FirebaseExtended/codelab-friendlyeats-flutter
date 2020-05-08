@@ -17,8 +17,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
-import './model/restaurant.dart';
-import './restaurant_card.dart';
+import '../model/restaurant.dart';
+import 'card.dart';
 
 const double _kMinSpacingPx = 16;
 const double _kCardWidth = 360;

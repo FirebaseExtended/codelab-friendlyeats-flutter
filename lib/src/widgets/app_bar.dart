@@ -14,8 +14,8 @@
 
 import 'package:flutter/material.dart';
 
-import './model/restaurant.dart';
-import './restaurant_star_rating.dart';
+import '../model/restaurant.dart';
+import 'stars.dart';
 
 class RestaurantAppBar extends StatelessWidget {
   static final double kAppBarHeight = 160;

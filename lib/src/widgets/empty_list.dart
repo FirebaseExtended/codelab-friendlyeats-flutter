@@ -25,9 +25,10 @@ class EmptyListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     var imageSize = 600.0;
-    if (screenWidth < 640) {
-      imageSize = screenWidth * .66;
+    if (screenWidth < 640 || screenHeight < 820) {
+      imageSize = 300;
     }
     return Center(
       child: Column(

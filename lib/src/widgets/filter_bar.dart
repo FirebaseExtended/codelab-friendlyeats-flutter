@@ -14,7 +14,7 @@
 
 import 'package:flutter/material.dart';
 
-import './model/filter.dart';
+import '../model/filter.dart';
 
 const _kBold = TextStyle(fontWeight: FontWeight.bold);
 

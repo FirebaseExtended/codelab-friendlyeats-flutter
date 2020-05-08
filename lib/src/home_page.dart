@@ -19,26 +19,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import './empty_list.dart';
-import './filter_bar.dart';
-import './filter_dialog.dart';
-import './model/filter.dart';
-import './model/data.dart' as data;
-import './model/restaurant.dart';
-import './restaurant_grid.dart';
-import './restaurant_page.dart';
+import 'restaurant_page.dart';
+import 'model/data.dart' as data;
+import 'model/filter.dart';
+import 'model/restaurant.dart';
+import 'widgets/empty_list.dart';
+import 'widgets/filter_bar.dart';
+import 'widgets/grid.dart';
+import 'widgets/dialogs/filter_select.dart';
 
-class FriendlyEatsHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   static const route = '/';
 
-  FriendlyEatsHomePage({Key key}) : super(key: key);
+  HomePage({Key key}) : super(key: key);
 
   @override
-  _FriendlyEatsHomePageState createState() => _FriendlyEatsHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
-  _FriendlyEatsHomePageState() {
+class _HomePageState extends State<HomePage> {
+  _HomePageState() {
     FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
       _currentSubscription =
           data.loadAllRestaurants().listen(_updateRestaurants);
@@ -73,7 +73,7 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
   Future<void> _onFilterBarPressed() async {
     final filter = await showDialog<Filter>(
       context: context,
-      builder: (_) => FilterDialog(filter: _filter),
+      builder: (_) => FilterSelectDialog(filter: _filter),
     );
     if (filter != null) {
       await _currentSubscription?.cancel();
@@ -119,9 +119,9 @@ class _FriendlyEatsHomePageState extends State<FriendlyEatsHomePage> {
                       onRestaurantPressed: (id) {
                         // TODO: Add deep links on web
                         Navigator.pushNamed(
-                            context, FriendlyEatsRestaurantPage.route,
+                            context, RestaurantPage.route,
                             arguments:
-                                FriendlyEatsRestaurantPageArguments(id: id));
+                                RestaurantPageArguments(id: id));
                       })
                   : EmptyListView(
                       child: Text('FriendlyEats has no restaurants yet!'),

@@ -14,8 +14,8 @@
 
 import 'package:flutter/material.dart';
 
-import './model/review.dart';
-import './restaurant_star_rating.dart';
+import '../model/review.dart';
+import 'stars.dart';
 
 class RestaurantReview extends StatelessWidget {
   RestaurantReview({
