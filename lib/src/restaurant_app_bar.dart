@@ -40,6 +40,7 @@ class RestaurantAppBar extends StatelessWidget {
       expandedHeight: kAppBarHeight,
       forceElevated: true,
       flexibleSpace: FlexibleSpaceBar(
+        centerTitle: false,
         title: Wrap(
           children: <Widget>[
             Text(
