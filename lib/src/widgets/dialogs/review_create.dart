@@ -20,25 +20,16 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import '../../model/review.dart';
 
 class ReviewCreateDialog extends StatefulWidget {
-  final String _userName;
-  final String _userId;
-
-  ReviewCreateDialog({String userName, String userId, Key key})
-      : _userName = userName,
-        _userId = userId,
-        super(key: key);
-
-  @override
-  _ReviewCreateDialogState createState() =>
-      _ReviewCreateDialogState(userName: _userName, userId: _userId);
-}
-
-class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
-  _ReviewCreateDialogState({this.userName, this.userId});
-
   final String userName;
   final String userId;
 
+  ReviewCreateDialog({this.userName, this.userId, Key key});
+
+  @override
+  _ReviewCreateDialogState createState() => _ReviewCreateDialogState();
+}
+
+class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
   double rating = 0;
   String review;
 
@@ -94,14 +85,17 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
           onPressed: () => Navigator.pop(context, null),
         ),
         RaisedButton(
-            child: Text('SAVE'),
-            onPressed: () => Navigator.pop(
-                context,
-                Review.fromUserInput(
-                    rating: rating,
-                    text: review,
-                    userId: userId,
-                    userName: userName))),
+          child: Text('SAVE'),
+          onPressed: () => Navigator.pop(
+            context,
+            Review.fromUserInput(
+              rating: rating,
+              text: review,
+              userId: widget.userId,
+              userName: widget.userName,
+            ),
+          ),
+        ),
       ],
     );
   }
