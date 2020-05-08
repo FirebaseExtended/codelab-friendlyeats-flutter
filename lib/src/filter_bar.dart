@@ -27,7 +27,7 @@ class FilterBar extends StatelessWidget {
   final Filter _filter;
 
   List<InlineSpan> _buildCategorySpans(Filter filter) {
-    final widgets = [];
+    final widgets = <InlineSpan>[];
     if (filter == null || filter.isDefault || filter.category == null) {
       widgets.add(TextSpan(text: 'All Restaurants', style: _kBold));
     } else {
@@ -38,7 +38,7 @@ class FilterBar extends StatelessWidget {
   }
 
   List<InlineSpan> _buildPriceSpans(Filter filter) {
-    final widgets = [];
+    final widgets = <InlineSpan>[];
     if (filter.price != null) {
       widgets.add(TextSpan(text: ' of '));
       widgets.add(TextSpan(text: '\$' * filter.price, style: _kBold));
@@ -47,7 +47,7 @@ class FilterBar extends StatelessWidget {
   }
 
   List<InlineSpan> _buildTitleSpans(Filter filter) {
-    final widgets = [];
+    final widgets = <InlineSpan>[];
     widgets.addAll(_buildCategorySpans(filter));
     if (filter != null && !filter.isDefault) {
       widgets.addAll(_buildPriceSpans(filter));
@@ -56,7 +56,7 @@ class FilterBar extends StatelessWidget {
   }
 
   List<InlineSpan> _buildCitySpans(Filter filter) {
-    final widgets = [];
+    final widgets = <InlineSpan>[];
     if (filter.city != null) {
       widgets.add(TextSpan(text: 'in '));
       widgets.add(TextSpan(text: '${filter.city} ', style: _kBold));
@@ -65,7 +65,7 @@ class FilterBar extends StatelessWidget {
   }
 
   List<InlineSpan> _buildSubtitleSpans(Filter filter) {
-    final widgets = [];
+    final widgets = <InlineSpan>[];
     if (filter != null) {
       widgets.addAll(_buildCitySpans(filter));
     }
