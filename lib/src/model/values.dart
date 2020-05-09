@@ -14,7 +14,7 @@
 
 import 'dart:math';
 
-final List<String> cities = <String>[
+final cities = [
   'Albuquerque',
   'Arlington',
   'Atlanta',
@@ -65,7 +65,7 @@ final List<String> cities = <String>[
   'Washington',
 ];
 
-final List<String> categories = <String>[
+final categories = [
   'Brunch',
   'Burgers',
   'Coffee',
@@ -80,7 +80,7 @@ final List<String> categories = <String>[
   'Sushi',
 ];
 
-final List<String> _words = <String>[
+final _words = [
   'Bar',
   'Deli',
   'Diner',
@@ -106,7 +106,7 @@ final List<String> _words = <String>[
   'Eatin\'',
 ];
 
-final Map<int, List<String>> _reviewTextPerRating = <int, List<String>>{
+final _reviewTextPerRating = {
   1: [
     'Would never eat here again!',
     'Such an awful place!',
@@ -134,7 +134,7 @@ final Map<int, List<String>> _reviewTextPerRating = <int, List<String>>{
   ],
 };
 
-final Random random = Random();
+final random = Random();
 
 String getRandomReviewText(int rating) {
   final reviews = _reviewTextPerRating[rating];

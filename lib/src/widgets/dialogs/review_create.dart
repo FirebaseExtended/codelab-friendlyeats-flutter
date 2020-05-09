@@ -52,7 +52,7 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
                 color: color,
                 borderColor: Colors.grey,
                 size: 32,
-                onRatingChanged: (double value) {
+                onRatingChanged: (value) {
                   if (mounted) {
                     setState(() {
                       rating = value;
@@ -67,7 +67,7 @@ class _ReviewCreateDialogState extends State<ReviewCreateDialog> {
                     hintText: 'Type your review here.'),
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                onChanged: (String value) {
+                onChanged: (value) {
                   if (mounted) {
                     setState(() {
                       review = value;

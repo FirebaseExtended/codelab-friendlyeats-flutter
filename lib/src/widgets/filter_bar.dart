@@ -27,54 +27,50 @@ class FilterBar extends StatelessWidget {
   final Filter _filter;
 
   List<InlineSpan> _buildCategorySpans(Filter filter) {
-    final widgets = <InlineSpan>[];
-    if (filter == null || filter.isDefault || filter.category == null) {
-      widgets.add(TextSpan(text: 'All Restaurants', style: _kBold));
-    } else {
-      widgets.add(TextSpan(text: '${filter.category}', style: _kBold));
-      widgets.add(TextSpan(text: ' places'));
-    }
-    return widgets;
+    final noneSelected =
+        filter == null || filter.isDefault || filter.category == null;
+    return [
+      if (noneSelected) TextSpan(text: 'All Restaurants', style: _kBold),
+      if (!noneSelected) ...[
+        TextSpan(text: '${filter.category}', style: _kBold),
+        TextSpan(text: ' places'),
+      ],
+    ];
   }
 
   List<InlineSpan> _buildPriceSpans(Filter filter) {
-    final widgets = <InlineSpan>[];
-    if (filter.price != null) {
-      widgets.add(TextSpan(text: ' of '));
-      widgets.add(TextSpan(text: '\$' * filter.price, style: _kBold));
-    }
-    return widgets;
+    return [
+      if (filter.price != null) ...[
+        TextSpan(text: ' of '),
+        TextSpan(text: '\$' * filter.price, style: _kBold),
+      ],
+    ];
   }
 
   List<InlineSpan> _buildTitleSpans(Filter filter) {
-    final widgets = <InlineSpan>[];
-    widgets.addAll(_buildCategorySpans(filter));
-    if (filter != null && !filter.isDefault) {
-      widgets.addAll(_buildPriceSpans(filter));
-    }
-    return widgets;
+    return [
+      ..._buildCategorySpans(filter),
+      if (filter != null && !filter.isDefault) ..._buildPriceSpans(filter),
+    ];
   }
 
   List<InlineSpan> _buildCitySpans(Filter filter) {
-    final widgets = <InlineSpan>[];
-    if (filter.city != null) {
-      widgets.add(TextSpan(text: 'in '));
-      widgets.add(TextSpan(text: '${filter.city} ', style: _kBold));
-    }
-    return widgets;
+    return [
+      if (filter.city != null) ...[
+        TextSpan(text: 'in '),
+        TextSpan(text: '${filter.city} ', style: _kBold),
+      ],
+    ];
   }
 
   List<InlineSpan> _buildSubtitleSpans(Filter filter) {
-    final widgets = <InlineSpan>[];
-    if (filter != null) {
-      widgets.addAll(_buildCitySpans(filter));
-    }
-    if (filter == null || filter.sort == null || filter.sort == 'avgRating') {
-      widgets.add(TextSpan(text: 'by rating'));
-    } else {
-      widgets.add(TextSpan(text: 'by # reviews'));
-    }
-    return widgets;
+    final orderedByRating =
+        filter == null || filter.sort == null || filter.sort == 'avgRating';
+    return [
+      if (filter != null) ..._buildCitySpans(filter),
+      if (orderedByRating) TextSpan(text: 'by rating'),
+      if (!orderedByRating) TextSpan(text: 'by # reviews'),
+    ];
   }
 
   @override
@@ -84,14 +80,14 @@ class FilterBar extends StatelessWidget {
       padding: EdgeInsets.all(6),
       onPressed: _onPressed,
       child: Row(
-        children: <Widget>[
+        children: [
           Icon(Icons.filter_list),
           Expanded(
             child: Padding(
               padding: EdgeInsets.fromLTRB(6, 0, 6, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children: [
                   RichText(
                     overflow: TextOverflow.ellipsis,
                     text: TextSpan(

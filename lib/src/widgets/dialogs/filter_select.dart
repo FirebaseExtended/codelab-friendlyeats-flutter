@@ -47,11 +47,15 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
   String _sort;
 
   Widget _buildDropdown<T>(
-      List labels, List values, dynamic selected, Function onChanged) {
-    final items = [];
-    for (var i = 0; i < values.length; i++) {
-      items.add(DropdownMenuItem<T>(value: values[i], child: Text(labels[i])));
-    }
+    List labels,
+    List values,
+    dynamic selected,
+    Function onChanged,
+  ) {
+    final items = [
+      for (var i = 0; i < values.length; i++)
+        DropdownMenuItem<T>(value: values[i], child: Text(labels[i])),
+    ];
     return DropdownButton<T>(
       items: items,
       isExpanded: true,
@@ -60,29 +64,31 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     );
   }
 
-  Widget _buildDropdownRow<T>(
-      {List<T> values,
-      List<String> labels,
-      T selected,
-      IconData icon,
-      Function onChanged}) {
-    return Row(mainAxisSize: MainAxisSize.max, children: <Widget>[
-      Icon(icon),
-      Expanded(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
-          child: _buildDropdown<T>(labels, values, selected, onChanged),
+  Widget _buildDropdownRow<T>({
+    List<T> values,
+    List<String> labels,
+    T selected,
+    IconData icon,
+    Function onChanged,
+  }) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Icon(icon),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
+            child: _buildDropdown<T>(labels, values, selected, onChanged),
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 
   Widget _buildCategoryDropdown({String selected, Function onChanged}) {
-    final values = [null, ...hardcoded.categories];
-    final labels = ['Any Cuisine', ...hardcoded.categories];
     return _buildDropdownRow<String>(
-      labels: labels,
-      values: values,
+      labels: ['Any Cuisine', ...hardcoded.categories],
+      values: [null, ...hardcoded.categories],
       selected: selected,
       icon: Icons.fastfood,
       onChanged: onChanged,
@@ -90,11 +96,9 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
   }
 
   Widget _buildCityDropdown({String selected, Function onChanged}) {
-    final values = [null, ...hardcoded.cities];
-    final labels = ['Any Location', ...hardcoded.cities];
     return _buildDropdownRow<String>(
-      labels: labels,
-      values: values,
+      labels: ['Any Location', ...hardcoded.cities],
+      values: [null, ...hardcoded.cities],
       selected: selected,
       icon: Icons.location_on,
       onChanged: onChanged,
@@ -102,11 +106,9 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
   }
 
   Widget _buildPriceDropdown({int selected, Function onChanged}) {
-    final values = [null, 1, 2, 3, 4];
-    final labels = ['Any Price', '\$', '\$\$', '\$\$\$', '\$\$\$\$'];
     return _buildDropdownRow<int>(
-      labels: labels,
-      values: values,
+      labels: ['Any Price', '\$', '\$\$', '\$\$\$', '\$\$\$\$'],
+      values: [null, 1, 2, 3, 4],
       selected: selected,
       icon: Icons.monetization_on,
       onChanged: onChanged,
@@ -114,11 +116,9 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
   }
 
   Widget _buildSortDropdown({String selected, Function onChanged}) {
-    final values = ['avgRating', 'numRatings'];
-    final labels = ['Rating', 'Reviews'];
     return _buildDropdownRow<String>(
-      labels: labels,
-      values: values,
+      labels: ['Rating', 'Reviews'],
+      values: ['avgRating', 'numRatings'],
       selected: selected,
       icon: Icons.sort,
       onChanged: onChanged,
@@ -130,7 +130,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     return AlertDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
+        children: [
           Icon(Icons.filter_list),
           Padding(
             padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
@@ -143,7 +143,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
         height: math.min(MediaQuery.of(context).size.height, 200),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
+          children: [
             _buildCategoryDropdown(
                 selected: _category,
                 onChanged: (String value) {
@@ -175,7 +175,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
           ],
         ),
       ),
-      actions: <Widget>[
+      actions: [
         FlatButton(
           child: Text('CLEAR ALL'),
           onPressed: () => Navigator.pop(context, Filter()),
