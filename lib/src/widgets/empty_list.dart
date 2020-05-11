@@ -14,6 +14,8 @@
 
 import 'package:flutter/material.dart';
 
+typedef EmptyListActionButtonCallback = void Function();
+
 class EmptyListView extends StatelessWidget {
   EmptyListView({
     this.child,
@@ -21,7 +23,7 @@ class EmptyListView extends StatelessWidget {
   });
 
   final Widget child;
-  final Function onPressed;
+  final EmptyListActionButtonCallback onPressed;
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;

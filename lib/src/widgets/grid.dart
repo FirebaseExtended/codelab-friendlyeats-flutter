@@ -25,12 +25,12 @@ const double _cardWidth = 360;
 
 class RestaurantGrid extends StatelessWidget {
   RestaurantGrid({
-    @required Function onRestaurantPressed,
+    @required RestaurantPressedCallback onRestaurantPressed,
     @required List<Restaurant> restaurants,
   })  : _onRestaurantPressed = onRestaurantPressed,
         _restaurants = restaurants;
 
-  final Function _onRestaurantPressed;
+  final RestaurantPressedCallback _onRestaurantPressed;
   final List<Restaurant> _restaurants;
 
   @override

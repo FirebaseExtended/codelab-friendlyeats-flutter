@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+typedef FilterChangedCallback<T> = void Function(T newValue);
+
 class Filter {
   final String city;
   final int price;

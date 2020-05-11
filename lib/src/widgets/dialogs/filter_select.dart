@@ -50,7 +50,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     List labels,
     List values,
     dynamic selected,
-    Function onChanged,
+    FilterChangedCallback<T> onChanged,
   ) {
     final items = [
       for (var i = 0; i < values.length; i++)
@@ -69,7 +69,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     List<String> labels,
     T selected,
     IconData icon,
-    Function onChanged,
+    FilterChangedCallback<T> onChanged,
   }) {
     return Row(
       mainAxisSize: MainAxisSize.max,
@@ -85,7 +85,10 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     );
   }
 
-  Widget _buildCategoryDropdown({String selected, Function onChanged}) {
+  Widget _buildCategoryDropdown({
+    String selected,
+    FilterChangedCallback<String> onChanged,
+  }) {
     return _buildDropdownRow<String>(
       labels: ['Any Cuisine', ...hardcoded.categories],
       values: [null, ...hardcoded.categories],
@@ -95,7 +98,10 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     );
   }
 
-  Widget _buildCityDropdown({String selected, Function onChanged}) {
+  Widget _buildCityDropdown({
+    String selected,
+    FilterChangedCallback<String> onChanged,
+  }) {
     return _buildDropdownRow<String>(
       labels: ['Any Location', ...hardcoded.cities],
       values: [null, ...hardcoded.cities],
@@ -105,7 +111,10 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     );
   }
 
-  Widget _buildPriceDropdown({int selected, Function onChanged}) {
+  Widget _buildPriceDropdown({
+    int selected,
+    FilterChangedCallback<int> onChanged,
+  }) {
     return _buildDropdownRow<int>(
       labels: ['Any Price', '\$', '\$\$', '\$\$\$', '\$\$\$\$'],
       values: [null, 1, 2, 3, 4],
@@ -115,7 +124,10 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     );
   }
 
-  Widget _buildSortDropdown({String selected, Function onChanged}) {
+  Widget _buildSortDropdown({
+    String selected,
+    FilterChangedCallback<String> onChanged,
+  }) {
     return _buildDropdownRow<String>(
       labels: ['Rating', 'Reviews'],
       values: ['avgRating', 'numRatings'],

@@ -21,12 +21,12 @@ import 'stars.dart';
 class RestaurantCard extends StatelessWidget {
   RestaurantCard({
     this.restaurant,
-    @required Function onRestaurantPressed,
+    @required RestaurantPressedCallback onRestaurantPressed,
   }) : _onPressed = onRestaurantPressed;
 
   final Restaurant restaurant;
 
-  final Function _onPressed;
+  final RestaurantPressedCallback _onPressed;
 
   @override
   Widget build(BuildContext context) {

@@ -22,12 +22,12 @@ class RestaurantAppBar extends StatelessWidget {
 
   RestaurantAppBar({
     this.restaurant,
-    Function onClosePressed,
+    CloseRestaurantPressedCallback onClosePressed,
   }) : _onPressed = onClosePressed;
 
   final Restaurant restaurant;
 
-  final Function _onPressed;
+  final CloseRestaurantPressedCallback _onPressed;
 
   @override
   Widget build(BuildContext context) {

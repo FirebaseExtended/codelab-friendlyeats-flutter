@@ -18,6 +18,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './values.dart';
 
+typedef RestaurantPressedCallback = void Function(String restaurantId);
+
+typedef CloseRestaurantPressedCallback = void Function();
+
 class Restaurant {
   final String id;
   final String name;
