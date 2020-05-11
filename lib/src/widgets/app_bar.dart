@@ -18,7 +18,7 @@ import '../model/restaurant.dart';
 import 'stars.dart';
 
 class RestaurantAppBar extends StatelessWidget {
-  static final double kAppBarHeight = 160;
+  static final double appBarHeight = 160;
 
   RestaurantAppBar({
     this.restaurant,
@@ -37,7 +37,7 @@ class RestaurantAppBar extends StatelessWidget {
         icon: Icon(Icons.close),
         iconSize: 32,
       ),
-      expandedHeight: kAppBarHeight,
+      expandedHeight: appBarHeight,
       forceElevated: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: false,

@@ -134,7 +134,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                   onPressed: () => _onCreateReviewPressed(context),
                 ),
                 floatingPosition: FloatingPosition(right: 16),
-                expandedHeight: RestaurantAppBar.kAppBarHeight,
+                expandedHeight: RestaurantAppBar.appBarHeight,
                 slivers: <Widget>[
                   RestaurantAppBar(
                     restaurant: _restaurant,
