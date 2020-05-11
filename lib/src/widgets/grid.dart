@@ -20,8 +20,8 @@ import 'package:responsive_grid/responsive_grid.dart';
 import '../model/restaurant.dart';
 import 'card.dart';
 
-const double _kMinSpacingPx = 16;
-const double _kCardWidth = 360;
+const double _minSpacingPx = 16;
+const double _cardWidth = 360;
 
 class RestaurantGrid extends StatelessWidget {
   RestaurantGrid({
@@ -37,9 +37,9 @@ class RestaurantGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveGridList(
       // ResponsiveGridList crashes if desiredItemWidth + 2*minSpacing > Device window on Android
-      desiredItemWidth: math.min(_kCardWidth,
-          MediaQuery.of(context).size.width - (2 * _kMinSpacingPx)),
-      minSpacing: _kMinSpacingPx,
+      desiredItemWidth: math.min(
+          _cardWidth, MediaQuery.of(context).size.width - (2 * _minSpacingPx)),
+      minSpacing: _minSpacingPx,
       children: _restaurants
           .map((restaurant) => RestaurantCard(
                 restaurant: restaurant,

@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 
 import '../model/filter.dart';
 
-const _kBold = TextStyle(fontWeight: FontWeight.bold);
+const _boldStyle = TextStyle(fontWeight: FontWeight.bold);
 
 class FilterBar extends StatelessWidget {
   FilterBar({@required VoidCallback onPressed, Filter filter})
@@ -30,9 +30,9 @@ class FilterBar extends StatelessWidget {
     final noneSelected =
         filter == null || filter.isDefault || filter.category == null;
     return [
-      if (noneSelected) TextSpan(text: 'All Restaurants', style: _kBold),
+      if (noneSelected) TextSpan(text: 'All Restaurants', style: _boldStyle),
       if (!noneSelected) ...[
-        TextSpan(text: '${filter.category}', style: _kBold),
+        TextSpan(text: '${filter.category}', style: _boldStyle),
         TextSpan(text: ' places'),
       ],
     ];
@@ -42,7 +42,7 @@ class FilterBar extends StatelessWidget {
     return [
       if (filter.price != null) ...[
         TextSpan(text: ' of '),
-        TextSpan(text: '\$' * filter.price, style: _kBold),
+        TextSpan(text: '\$' * filter.price, style: _boldStyle),
       ],
     ];
   }
@@ -58,7 +58,7 @@ class FilterBar extends StatelessWidget {
     return [
       if (filter.city != null) ...[
         TextSpan(text: 'in '),
-        TextSpan(text: '${filter.city} ', style: _kBold),
+        TextSpan(text: '${filter.city} ', style: _boldStyle),
       ],
     ];
   }
