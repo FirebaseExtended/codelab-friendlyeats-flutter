@@ -34,13 +34,17 @@ Future<void> addRestaurant(Restaurant restaurant) {
 }
 
 Stream<QuerySnapshot> loadAllRestaurants() {
-  // TODO: Complete the "Display data from Cloud Firestore" step.
-  return Stream<QuerySnapshot>.value(null);
+  return Firestore.instance
+      .collection('restaurants')
+      .orderBy('avgRating', descending: true)
+      .limit(50)
+      .snapshots();
 }
 
 List<Restaurant> getRestaurantsFromQuery(QuerySnapshot snapshot) {
-  // TODO: Complete the "Display data from Cloud Firestore" step.
-  return [];
+  return snapshot.documents.map((DocumentSnapshot doc) {
+    return Restaurant.fromSnapshot(doc);
+  }).toList();
 }
 
 Future<Restaurant> getRestaurant(String restaurantId) {
