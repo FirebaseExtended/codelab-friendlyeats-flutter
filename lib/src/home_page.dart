@@ -63,11 +63,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<void> _onAddRandomRestaurantsPressed() {
+  Future<void> _onAddRandomRestaurantsPressed() async {
     final numReviews = Random().nextInt(10) + 20;
 
     final restaurants = List.generate(numReviews, (_) => Restaurant.random());
-    return data.addRestaurantsBatch(restaurants);
+    data.addRestaurantsBatch(restaurants);
   }
 
   Future<void> _onFilterBarPressed() async {

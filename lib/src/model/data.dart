@@ -20,7 +20,7 @@ import './review.dart';
 
 // This is the file that Codelab users will primarily work on.
 
-Future<void> addRestaurant(Restaurant restaurant) async {
+Future<void> addRestaurant(Restaurant restaurant) {
   final restaurants = Firestore.instance.collection('restaurants');
   return restaurants.add({
     'avgRating': restaurant.avgRating,
@@ -45,12 +45,6 @@ List<Restaurant> getRestaurantsFromQuery(QuerySnapshot snapshot) {
   return snapshot.documents.map((DocumentSnapshot doc) {
     return Restaurant.fromSnapshot(doc);
   }).toList();
-}
-
-Future<void> addRestaurantsBatch(List<Restaurant> restaurants) async {
-  restaurants.forEach((Restaurant restaurant) {
-    addRestaurant(restaurant);
-  });
 }
 
 Future<Restaurant> getRestaurant(String restaurantId) {
@@ -106,4 +100,10 @@ Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
       .orderBy(filter.sort ?? 'avgRating', descending: true)
       .limit(50)
       .snapshots();
+}
+
+void addRestaurantsBatch(List<Restaurant> restaurants) {
+  restaurants.forEach((Restaurant restaurant) {
+    addRestaurant(restaurant);
+  });
 }
