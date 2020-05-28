@@ -86,8 +86,20 @@ Future<void> addReview({String restaurantId, Review review}) {
 }
 
 Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
-  // TODO: Complete the "Sorting and filtering data" step.
-  return Stream<QuerySnapshot>.value(null);
+  Query collection = Firestore.instance.collection('restaurants');
+  if (filter.category != null) {
+    collection = collection.where('category', isEqualTo: filter.category);
+  }
+  if (filter.city != null) {
+    collection = collection.where('city', isEqualTo: filter.city);
+  }
+  if (filter.price != null) {
+    collection = collection.where('price', isEqualTo: filter.price);
+  }
+  return collection
+      .orderBy(filter.sort ?? 'avgRating', descending: true)
+      .limit(50)
+      .snapshots();
 }
 
 void addRestaurantsBatch(List<Restaurant> restaurants) {
