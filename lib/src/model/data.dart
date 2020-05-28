@@ -56,8 +56,33 @@ Future<Restaurant> getRestaurant(String restaurantId) {
 }
 
 Future<void> addReview({String restaurantId, Review review}) {
-  // TODO: Complete the "Write data in a transaction" step.
-  return Future.value();
+  final restaurant =
+      Firestore.instance.collection('restaurants').document(restaurantId);
+  final newReview = restaurant.collection('ratings').document();
+
+  return Firestore.instance.runTransaction((Transaction transaction) {
+    return transaction
+        .get(restaurant)
+        .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc))
+        .then((Restaurant fresh) {
+      final newRatings = fresh.numRatings + 1;
+      final newAverage =
+          ((fresh.numRatings * fresh.avgRating) + review.rating) / newRatings;
+
+      transaction.update(restaurant, {
+        'numRatings': newRatings,
+        'avgRating': newAverage,
+      });
+
+      return transaction.set(newReview, {
+        'rating': review.rating,
+        'text': review.text,
+        'userName': review.userName,
+        'timestamp': review.timestamp ?? FieldValue.serverTimestamp(),
+        'userId': review.userId,
+      });
+    });
+  });
 }
 
 Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
