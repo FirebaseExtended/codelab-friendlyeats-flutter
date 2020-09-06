@@ -32,11 +32,11 @@ class Review {
   Review.fromSnapshot(DocumentSnapshot snapshot)
       : assert(snapshot != null),
         id = snapshot.documentID,
-        rating = snapshot['rating'].toDouble(),
-        text = snapshot['text'],
-        userName = snapshot['userName'],
-        userId = snapshot['userId'],
-        timestamp = snapshot['timestamp'],
+        rating = snapshot.get('rating').toDouble(),
+        text = snapshot.get('text'),
+        userName = snapshot.get('userName'),
+        userId = snapshot.get('userId'),
+        timestamp = snapshot.get('timestamp'),
         reference = snapshot.reference;
 
   Review.fromUserInput({this.rating, this.text, this.userName, this.userId})
