@@ -42,13 +42,13 @@ class Restaurant {
   Restaurant.fromSnapshot(DocumentSnapshot snapshot)
       : assert(snapshot != null),
         id = snapshot.id,
-        name = snapshot.get('name'),
-        category = snapshot.get('category'),
-        city = snapshot.get('city'),
-        avgRating = snapshot.get('avgRating').toDouble(),
-        numRatings = snapshot.get('numRatings'),
-        price = snapshot.get('price'),
-        photo = snapshot.get('photo'),
+        name = snapshot.data()['name'],
+        category = snapshot.data()['category'],
+        city = snapshot.data()['city'],
+        avgRating = snapshot.data()['avgRating'].toDouble(),
+        numRatings = snapshot.data()['numRatings'],
+        price = snapshot.data()['price'],
+        photo = snapshot.data()['photo'],
         reference = snapshot.reference;
 
   factory Restaurant.random() {
