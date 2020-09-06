@@ -38,6 +38,7 @@ class InitApp extends StatelessWidget {
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
+          print(snapshot.error.toString());
           return Container();
         }
 
