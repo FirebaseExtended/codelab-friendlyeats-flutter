@@ -65,7 +65,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
               .listen((QuerySnapshot reviewSnap) {
             setState(() {
               _isLoading = false;
-              _reviews = reviewSnap.documents.map((DocumentSnapshot doc) {
+              _reviews = reviewSnap.docs.map((DocumentSnapshot doc) {
                 return Review.fromSnapshot(doc);
               }).toList();
             });
