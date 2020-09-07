@@ -17,41 +17,16 @@ import 'package:flutter/material.dart';
 
 import 'src/app.dart' deferred as app;
 
-void main() {
-  final Future<void> loadedLibrary = app.loadLibrary();
+void main() async {
+  // Initialize Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  final Future<void> loadedLibrary = await app.loadLibrary();
   runApp(
     FutureBuilder(
       future: loadedLibrary,
-      builder: (snapshot, context) => InitApp(),
+      builder: (snapshot, context) => app.FriendlyEatsApp(),
     ),
   );
-}
-
-// Initialize FlutterFire
-class InitApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _initialization,
-      builder: (context, snapshot) {
-        // Check for errors
-        if (snapshot.hasError) {
-          print(snapshot.error.toString());
-          return Container();
-        }
-
-        // Once complete, show your application
-        if (snapshot.connectionState == ConnectionState.done) {
-          return app.FriendlyEatsApp();
-        }
-
-        // Otherwise, show something whilst waiting for initialization to complete
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-  }
 }
