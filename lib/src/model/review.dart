@@ -31,12 +31,12 @@ class Review {
 
   Review.fromSnapshot(DocumentSnapshot snapshot)
       : assert(snapshot != null),
-        id = snapshot.documentID,
-        rating = snapshot['rating'].toDouble(),
-        text = snapshot['text'],
-        userName = snapshot['userName'],
-        userId = snapshot['userId'],
-        timestamp = snapshot['timestamp'],
+        id = snapshot.id,
+        rating = snapshot.data()['rating'].toDouble(),
+        text = snapshot.data()['text'],
+        userName = snapshot.data()['userName'],
+        userId = snapshot.data()['userId'],
+        timestamp = snapshot.data()['timestamp'],
         reference = snapshot.reference;
 
   Review.fromUserInput({this.rating, this.text, this.userName, this.userId})

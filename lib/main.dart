@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'src/app.dart' deferred as app;
@@ -21,7 +22,36 @@ void main() {
   runApp(
     FutureBuilder(
       future: loadedLibrary,
-      builder: (snapshot, context) => app.FriendlyEatsApp(),
+      builder: (snapshot, context) => InitApp(),
     ),
   );
+}
+
+// Initialize FlutterFire
+class InitApp extends StatelessWidget {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          print(snapshot.error.toString());
+          return Container();
+        }
+
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return app.FriendlyEatsApp();
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+  }
 }
