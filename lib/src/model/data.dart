@@ -74,7 +74,7 @@ Future<void> addReview({String restaurantId, Review review}) {
         'avgRating': newAverage,
       });
 
-      return transaction.set(newReview, {
+      transaction.set(newReview, {
         'rating': review.rating,
         'text': review.text,
         'userName': review.userName,
