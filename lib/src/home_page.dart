@@ -39,7 +39,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   _HomePageState() {
-    FirebaseAuth.instance.signInAnonymously().then((UserCredential userCredential) {
+    FirebaseAuth.instance
+        .signInAnonymously()
+        .then((UserCredential userCredential) {
       _currentSubscription =
           data.loadAllRestaurants().listen(_updateRestaurants);
     });

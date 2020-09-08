@@ -45,11 +45,14 @@ class RestaurantPage extends StatefulWidget {
 
 class _RestaurantPageState extends State<RestaurantPage> {
   _RestaurantPageState({@required String restaurantId}) {
-    FirebaseAuth.instance.signInAnonymously().then((UserCredential userCredential) {
+    FirebaseAuth.instance
+        .signInAnonymously()
+        .then((UserCredential userCredential) {
       data.getRestaurant(restaurantId).then((Restaurant restaurant) {
         _currentReviewSubscription?.cancel();
         setState(() {
-          if (userCredential.user.displayName == null || userCredential.user.displayName.isEmpty) {
+          if (userCredential.user.displayName == null ||
+              userCredential.user.displayName.isEmpty) {
             _userName = 'Anonymous (${kIsWeb ? "Web" : "Mobile"})';
           } else {
             _userName = userCredential.user.displayName;

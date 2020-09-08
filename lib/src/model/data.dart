@@ -57,7 +57,7 @@ Future<Restaurant> getRestaurant(String restaurantId) {
 
 Future<void> addReview({String restaurantId, Review review}) {
   final restaurant =
-  FirebaseFirestore.instance.collection('restaurants').doc(restaurantId);
+      FirebaseFirestore.instance.collection('restaurants').doc(restaurantId);
   final newReview = restaurant.collection('ratings').doc();
 
   return FirebaseFirestore.instance.runTransaction((Transaction transaction) {
