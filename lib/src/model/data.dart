@@ -21,7 +21,7 @@ import './review.dart';
 // This is the file that Codelab users will primarily work on.
 
 Future<void> addRestaurant(Restaurant restaurant) {
-  final restaurants = Firestore.instance.collection('restaurants');
+  final restaurants = FirebaseFirestore.instance.collection('restaurants');
   return restaurants.add({
     'avgRating': restaurant.avgRating,
     'category': restaurant.category,
@@ -34,7 +34,7 @@ Future<void> addRestaurant(Restaurant restaurant) {
 }
 
 Stream<QuerySnapshot> loadAllRestaurants() {
-  return Firestore.instance
+  return FirebaseFirestore.instance
       .collection('restaurants')
       .orderBy('avgRating', descending: true)
       .limit(50)
@@ -42,25 +42,25 @@ Stream<QuerySnapshot> loadAllRestaurants() {
 }
 
 List<Restaurant> getRestaurantsFromQuery(QuerySnapshot snapshot) {
-  return snapshot.documents.map((DocumentSnapshot doc) {
+  return snapshot.docs.map((DocumentSnapshot doc) {
     return Restaurant.fromSnapshot(doc);
   }).toList();
 }
 
 Future<Restaurant> getRestaurant(String restaurantId) {
-  return Firestore.instance
+  return FirebaseFirestore.instance
       .collection('restaurants')
-      .document(restaurantId)
+      .doc(restaurantId)
       .get()
       .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc));
 }
 
 Future<void> addReview({String restaurantId, Review review}) {
   final restaurant =
-      Firestore.instance.collection('restaurants').document(restaurantId);
-  final newReview = restaurant.collection('ratings').document();
+      FirebaseFirestore.instance.collection('restaurants').doc(restaurantId);
+  final newReview = restaurant.collection('ratings').doc();
 
-  return Firestore.instance.runTransaction((Transaction transaction) {
+  return FirebaseFirestore.instance.runTransaction((Transaction transaction) {
     return transaction
         .get(restaurant)
         .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc))
@@ -74,7 +74,7 @@ Future<void> addReview({String restaurantId, Review review}) {
         'avgRating': newAverage,
       });
 
-      return transaction.set(newReview, {
+      transaction.set(newReview, {
         'rating': review.rating,
         'text': review.text,
         'userName': review.userName,
@@ -86,7 +86,7 @@ Future<void> addReview({String restaurantId, Review review}) {
 }
 
 Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
-  Query collection = Firestore.instance.collection('restaurants');
+  Query collection = FirebaseFirestore.instance.collection('restaurants');
   if (filter.category != null) {
     collection = collection.where('category', isEqualTo: filter.category);
   }
