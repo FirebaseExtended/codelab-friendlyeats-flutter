@@ -19,13 +19,14 @@ description: A new Flutter project.
 publish_to: none
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  firebase_auth: ^0.15.3
-  cloud_firestore: ^0.13.2
-  responsive_grid: ^1.1.1
-  smooth_star_rating: ^1.0.4+2
+  firebase_core: ^0.5.0
+  firebase_auth: ^0.18.0+1
+  cloud_firestore: ^0.14.0+2
+  responsive_grid: ^1.2.1+1
+  smooth_star_rating: ^1.1.1
   sliver_fab: ^1.0.0
   flutter:
     sdk: flutter

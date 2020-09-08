@@ -12,12 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'src/app.dart' deferred as app;
 
-void main() {
-  final Future<void> loadedLibrary = app.loadLibrary();
+void main() async {
+  // Initialize Firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  final Future<void> loadedLibrary = await app.loadLibrary();
   runApp(
     FutureBuilder(
       future: loadedLibrary,
