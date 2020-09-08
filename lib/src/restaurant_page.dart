@@ -45,17 +45,20 @@ class RestaurantPage extends StatefulWidget {
 
 class _RestaurantPageState extends State<RestaurantPage> {
   _RestaurantPageState({@required String restaurantId}) {
-    FirebaseAuth.instance.signInAnonymously().then((AuthResult auth) {
+    FirebaseAuth.instance
+        .signInAnonymously()
+        .then((UserCredential userCredential) {
       data.getRestaurant(restaurantId).then((Restaurant restaurant) {
         _currentReviewSubscription?.cancel();
         setState(() {
-          if (auth.user.displayName == null || auth.user.displayName.isEmpty) {
+          if (userCredential.user.displayName == null ||
+              userCredential.user.displayName.isEmpty) {
             _userName = 'Anonymous (${kIsWeb ? "Web" : "Mobile"})';
           } else {
-            _userName = auth.user.displayName;
+            _userName = userCredential.user.displayName;
           }
           _restaurant = restaurant;
-          _userId = auth.user.uid;
+          _userId = userCredential.user.uid;
 
           // Initialize the reviews snapshot...
           _currentReviewSubscription = _restaurant.reference
@@ -65,7 +68,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
               .listen((QuerySnapshot reviewSnap) {
             setState(() {
               _isLoading = false;
-              _reviews = reviewSnap.documents.map((DocumentSnapshot doc) {
+              _reviews = reviewSnap.docs.map((DocumentSnapshot doc) {
                 return Review.fromSnapshot(doc);
               }).toList();
             });

@@ -12,16 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'src/app.dart' deferred as app;
 
-void main() {
-  final Future<void> loadedLibrary = app.loadLibrary();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final loaded = Future.wait([
+    app.loadLibrary(),
+    Firebase.initializeApp(),
+  ]);
+
   runApp(
     FutureBuilder(
-      future: loadedLibrary,
-      builder: (snapshot, context) => app.FriendlyEatsApp(),
+      future: loaded,
+      builder: (_, snapshot) {
+        if (snapshot.hasError) {
+          print(snapshot.error.toString());
+        }
+
+        if (snapshot.hasData) {
+          return app.FriendlyEatsApp();
+        }
+
+        return Container(color: Colors.white);
+      },
     ),
   );
 }
