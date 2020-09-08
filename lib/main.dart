@@ -33,7 +33,7 @@ void main() async {
           print(snapshot.error.toString());
         }
 
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData) {
           return app.FriendlyEatsApp();
         }
 
