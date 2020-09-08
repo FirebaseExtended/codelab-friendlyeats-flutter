@@ -35,6 +35,7 @@ class StarRating extends StatelessWidget {
       color: color,
       borderColor: color,
       size: size,
+      isReadOnly: true,
     );
   }
 }
