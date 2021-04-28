@@ -15,31 +15,29 @@
 name: friendlyeats
 description: A new Flutter project.
 
-# version: 1.0.0
+version: 2.0.0+8
 publish_to: none
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.10.0 <3.0.0'
 
 dependencies:
-  firebase_core: ^0.5.0
-  firebase_auth: ^0.18.0+1
-  cloud_firestore: ^0.14.0+2
-  responsive_grid: ^1.2.1+1
-  smooth_star_rating: ^1.1.1
-  sliver_fab: ^1.0.0
   flutter:
     sdk: flutter
+  cloud_firestore: ^1.0.3
+  firebase_auth: ^1.0.1
+  firebase_core: ^1.0.2
+  responsive_grid: ^1.2.1+1
+  sliver_fab: ^1.0.0
+  smooth_star_rating: ^1.1.1
 
 dev_dependencies:
-  pedantic: ^1.9.0
   flutter_test:
     sdk: flutter
-
+  pedantic: ^1.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -51,7 +49,6 @@ flutter:
   # https://flutter.dev/assets-and-images
   assets:
     - assets/friendlyeater.png
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

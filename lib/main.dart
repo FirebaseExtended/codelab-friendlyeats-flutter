@@ -18,15 +18,27 @@ import 'package:flutter/material.dart';
 import 'src/app.dart' deferred as app;
 
 void main() async {
-  // Initialize Firebase
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
 
-  final Future<void> loadedLibrary = await app.loadLibrary();
+  final loaded = Future.wait([
+    app.loadLibrary(),
+    Firebase.initializeApp(),
+  ]);
+
   runApp(
     FutureBuilder(
-      future: loadedLibrary,
-      builder: (snapshot, context) => app.FriendlyEatsApp(),
+      future: loaded,
+      builder: (_, snapshot) {
+        if (snapshot.hasError) {
+          print(snapshot.error.toString());
+        }
+
+        if (snapshot.hasData) {
+          return app.FriendlyEatsApp();
+        }
+
+        return Container(color: Colors.white);
+      },
     ),
   );
 }
