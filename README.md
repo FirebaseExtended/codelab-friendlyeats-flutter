@@ -1,5 +1,4 @@
-# FlutterFire Codelab: Friendly Eats
-A cross-platform Flutter port of the "Friendly Eats" Firestore codelab.
+# Firebase Codelab: Your First In-App Messaging Experiment
 
-This is the source code for the FlutterFire Friendly Eats codelab. It includes 
+This is the source code for the Firebase In App Messaging A/B Testing Codelab. It includes 
 start and end versions of the required code.
