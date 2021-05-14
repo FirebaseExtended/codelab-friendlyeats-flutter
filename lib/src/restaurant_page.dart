@@ -16,6 +16,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+// TODO: Add Firebase Analytics
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,9 @@ import 'widgets/dialogs/review_create.dart';
 
 class RestaurantPage extends StatefulWidget {
   static const route = '/restaurant';
+
+  // TODO: Add Firebase Analytics
+  //static FirebaseAnalytics analytics = FirebaseAnalytics();
 
   final String _restaurantId;
 
@@ -101,6 +106,8 @@ class _RestaurantPageState extends State<RestaurantPage> {
       ),
     );
     if (newReview != null) {
+      // TODO: Instrument a successful review with analytics
+      // await RestaurantPage.analytics.logEvent(name: 'review_success');
       // Save the review
       return data.addReview(
         restaurantId: _restaurant.id,

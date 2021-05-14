@@ -17,6 +17,8 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// TODO: Add Firebase Analytics
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 import 'restaurant_page.dart';
@@ -31,6 +33,8 @@ import 'widgets/dialogs/filter_select.dart';
 class HomePage extends StatefulWidget {
   static const route = '/';
 
+  // TODO: Add Firebase Analytics
+  // static FirebaseAnalytics analytics = FirebaseAnalytics();
   HomePage({Key key}) : super(key: key);
 
   @override
@@ -118,8 +122,9 @@ class _HomePageState extends State<HomePage> {
               : _restaurants.isNotEmpty
                   ? RestaurantGrid(
                       restaurants: _restaurants,
-                      onRestaurantPressed: (id) {
-                        // TODO: Add deep links on web
+                      onRestaurantPressed: (id) async {
+                        // TODO: Instrument this click with analytics
+                        // await HomePage.analytics.logEvent(name: 'click_food');
                         Navigator.pushNamed(context, RestaurantPage.route,
                             arguments: RestaurantPageArguments(id: id));
                       })
