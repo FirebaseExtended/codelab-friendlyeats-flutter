@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "373599413213",
+    "project_id": "jheron-flutter-codelab",
+    "storage_bucket": "jheron-flutter-codelab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373599413213:android:249408200cf779d0fbcc34",
+        "android_client_info": {
+          "package_name": "com.example.friendlyeats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373599413213-tnno9qh0h76qpied725um4fn2fjb31hq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX--ieQghzJfDCdd67dEtiAkk3J0yiSWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373599413213-tnno9qh0h76qpied725um4fn2fjb31hq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
